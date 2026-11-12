@@ -5,7 +5,7 @@ React + Vite and packaged as a Windows desktop app with Electron.
 This repository is a legacy rescue project: the game was vibe-coded by a
 non-developer and is being stabilized and cleaned by Code Wash Inc.
 
-The technical debt register lives in `CodeWashGame/docs/DEBT.md`.
+The technical debt register lives in `docs/DEBT.md`.
 
 ## Prerequisites
 
