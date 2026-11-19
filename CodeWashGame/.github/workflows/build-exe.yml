@@ -1,9 +1,11 @@
 name: Build Windows EXE
 
+# Manual run (workflow_dispatch) builds the exe as an artifact.
+# Pushing a version tag (v*) also publishes a GitHub release.
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -40,12 +42,12 @@ jobs:
           path: release/LevelUpRPG-Portable.exe
           if-no-files-found: error
 
-      - name: Create Release (on main branch push)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Create Release (on version tag)
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ github.run_number }}
-          name: Level Up RPG v${{ github.run_number }}
+          tag_name: ${{ github.ref_name }}
+          name: Level Up RPG ${{ github.ref_name }}
           body: |
             ## Level Up RPG - Windows Portable Version
             
