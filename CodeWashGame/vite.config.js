@@ -14,6 +14,7 @@ export default defineConfig({
       // without adding a debt item (see docs/DEBT.md).
       thresholds: {
         'src/utils/gameUtils.js': { lines: 80 },
+        'src/utils/achievementUtils.js': { lines: 90 },
       },
     },
   },
