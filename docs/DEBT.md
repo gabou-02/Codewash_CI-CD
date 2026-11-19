@@ -57,10 +57,12 @@ Re-measure after each phase.
 - **D05 · Two god components** : App.jsx (one 361-line function) and SkillCard.jsx
   (complexity 107, 1100-char lines). Untestable. (week+, open)
 - **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, open)
-- **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours, open)
+- **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours,
+  done: workflow now runs on tags/manual only)
 - **D08 · No test/lint/coverage in CI**. (days, open)
-- **D09 · 374 `._*` junk files** : cause all 28 lint errors, block lint as a gate. (hours, open)
-- **D10 · No README / .gitignore**. (hours, in progress: files written, to commit)
+- **D09 · 374 `._*` junk files** : cause all 28 lint errors, block lint as a gate. (hours,
+  done: lint 28 errors -> 0)
+- **D10 · No README / .gitignore**. (hours, done)
 
 ## 4. Fix soon (P2)
 
