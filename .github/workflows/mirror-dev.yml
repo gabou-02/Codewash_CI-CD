@@ -17,10 +17,11 @@ jobs:
 
       - name: Push dev to school repo
         env:
-          SSH_KEY: ${{ secrets.SCHOOL_DEPLOY_KEY }}
+          SSH_KEY: ${{ secrets.SCHOOL_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git remote add school git@github.com:<orga-ecole>/B-ING-300-MPL-3-1-codewash-1.git
+          git push school HEAD:dev
