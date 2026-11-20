@@ -28,7 +28,7 @@ graph TD
 
 | What | Value |
 |---|---|
-| Test coverage | 0 % |
+| Test coverage | 0 % (after D08: gameUtils.js 80 % lines, gated at 80) |
 | Code size | 6 938 lines / 24 files (App.jsx 1492, GlobalStyles 1302, SkillCard 778) |
 | Complexity | worst 107 (SkillCard.jsx:65), 14 functions above 10 |
 | Duplication | 2.5 % (6 clones, biggest 103 lines) |
@@ -57,10 +57,14 @@ Re-measure after each phase.
 - **D05 · Two god components** : App.jsx (one 361-line function) and SkillCard.jsx
   (complexity 107, 1100-char lines). Untestable. (week+, open)
 - **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, open)
-- **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours, open)
-- **D08 · No test/lint/coverage in CI**. (days, open)
-- **D09 · 374 `._*` junk files** : cause all 28 lint errors, block lint as a gate. (hours, open)
-- **D10 · No README / .gitignore**. (hours, in progress: files written, to commit)
+- **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours,
+  done: workflow now runs on tags/manual only; it was in fact inert, `.github` sits
+  in CodeWashGame/ and GitHub only reads workflows at the repo root)
+- **D08 · No test/lint/coverage in CI**. (days, done: Vitest + 19 characterization
+  tests on the game formulas, root ci.yml runs lint + build + tests + coverage gate)
+- **D09 · 374 `._*` junk files** : cause all 28 lint errors, block lint as a gate. (hours,
+  done: lint 28 errors -> 0)
+- **D10 · No README / .gitignore**. (hours, done)
 
 ## 4. Fix soon (P2)
 
