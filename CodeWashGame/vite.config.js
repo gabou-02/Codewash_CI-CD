@@ -1,17 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative paths for Electron compatibility
+  base: "./", // Use relative paths for Electron compatibility
   test: {
-    environment: 'node',
+    environment: "node",
     coverage: {
-      provider: 'v8',
-      include: ['src/**'],
-      exclude: ['src/**/*.test.{js,jsx}'],
-      reporter: ['text', 'json-summary', 'json', 'lcov', 'html'],
+      provider: "v8",
+      include: ["src/**"],
+      exclude: ["src/**/*.test.{js,jsx}"],
+      reporter: ["text", "json-summary", "json", "lcov", "html"],
       reportOnFailure: true,
       // Ratchet: raise these as coverage grows, never lower them
       // without adding a debt item (see docs/DEBT.md).
@@ -20,9 +20,9 @@ export default defineConfig({
         statements: 0,
         functions: 0,
         branches: 0,
-        'src/utils/gameUtils.js': { lines: 80 },
-        'src/utils/achievementUtils.js': { lines: 90 },
+        "src/utils/gameUtils.js": { lines: 80 },
+        "src/utils/achievementUtils.js": { lines: 90 },
       },
     },
   },
-})
+});

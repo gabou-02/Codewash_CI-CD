@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // Pixel types for the heart shape grid
 const PIXEL = {
@@ -12,22 +12,22 @@ const PIXEL = {
 // Color configuration for filled and empty heart states
 const COLORS = {
   FILLED: {
-    fill: '#F22830',      // Minecraft red
-    dark: '#8B0000',      // Dark red shadow
-    highlight: '#FFFFFF', // White shine
+    fill: "#F22830", // Minecraft red
+    dark: "#8B0000", // Dark red shadow
+    highlight: "#FFFFFF", // White shine
   },
   EMPTY: {
-    fill: '#1f2937',      // Dark gray
-    dark: '#111827',      // Darker gray
-    highlight: '#374151', // Light gray
+    fill: "#1f2937", // Dark gray
+    dark: "#111827", // Darker gray
+    highlight: "#374151", // Light gray
   },
-  OUTLINE: '#000000',     // Black outline
+  OUTLINE: "#000000", // Black outline
 };
 
 /**
  * A Minecraft-style pixelated heart component for health display.
  * Uses a 9x9 pixel grid pattern with SVG for crisp rendering.
- * 
+ *
  * @param {Object} props
  * @param {number} props.size - The size of the heart in pixels (default: 32)
  * @param {boolean} props.filled - Whether the heart is filled (true) or empty (false)
@@ -55,20 +55,25 @@ const PixelHeart = ({ size = 32, filled = true }) => {
 
   const getColor = (value) => {
     switch (value) {
-      case PIXEL.OUTLINE: return COLORS.OUTLINE;
-      case PIXEL.FILL: return palette.fill;
-      case PIXEL.DARK: return palette.dark;
-      case PIXEL.HIGHLIGHT: return palette.highlight;
-      default: return 'transparent';
+      case PIXEL.OUTLINE:
+        return COLORS.OUTLINE;
+      case PIXEL.FILL:
+        return palette.fill;
+      case PIXEL.DARK:
+        return palette.dark;
+      case PIXEL.HIGHLIGHT:
+        return palette.highlight;
+      default:
+        return "transparent";
     }
   };
 
   return (
-    <svg 
-      width={size} 
-      height={size} 
+    <svg
+      width={size}
+      height={size}
       viewBox={`0 0 ${size} ${size}`}
-      style={{ imageRendering: 'pixelated' }}
+      style={{ imageRendering: "pixelated" }}
       className="drop-shadow-md"
     >
       {heartPixels.map((row, y) =>
@@ -84,7 +89,7 @@ const PixelHeart = ({ size = 32, filled = true }) => {
               fill={getColor(pixel)}
             />
           );
-        })
+        }),
       )}
     </svg>
   );
