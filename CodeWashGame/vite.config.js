@@ -10,9 +10,16 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/**'],
+      exclude: ['src/**/*.test.{js,jsx}'],
+      reporter: ['text', 'json-summary', 'json', 'lcov', 'html'],
+      reportOnFailure: true,
       // Ratchet: raise these as coverage grows, never lower them
       // without adding a debt item (see docs/DEBT.md).
       thresholds: {
+        lines: 0,
+        statements: 0,
+        functions: 0,
+        branches: 0,
         'src/utils/gameUtils.js': { lines: 80 },
         'src/utils/achievementUtils.js': { lines: 90 },
       },
