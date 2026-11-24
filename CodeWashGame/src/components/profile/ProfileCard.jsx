@@ -18,8 +18,8 @@ const ProfileCard = ({
   const [tempName, setTempName] = useState(name);
   const [showParentalModal, setShowParentalModal] = useState(false);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!isCurrent) setIsEditing(false);
   }, [isCurrent]);
 
