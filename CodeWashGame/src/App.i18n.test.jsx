@@ -64,4 +64,11 @@ describe('App language selector', () => {
         expect(screen.getByRole('button', { name: 'Paramètres' })).toBeDefined();
         expect(screen.queryByRole('button', { name: 'Settings' })).toBeNull();
     });
+
+    it('translates the settings drawer too, not just the buttons', () => {
+        renderApp('fr');
+
+        expect(screen.getByRole('heading', { name: 'Paramètres' })).toBeDefined();
+        expect(screen.getByText('Volume de la musique')).toBeDefined();
+    });
 });
