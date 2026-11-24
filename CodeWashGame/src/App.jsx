@@ -15,6 +15,7 @@ import MenuDrawer from './components/drawers/MenuDrawer';
 import SkillCard from './components/skills/SkillCard';
 import PhantomEvent from './components/PhantomEvent';
 import AchievementToast from './components/ui/AchievementToast';
+import LanguageSelector from './components/ui/LanguageSelector';
 
 // Utils & Constants
 import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss, getMobForSkill, getEncounterType, generateMathProblem, getReadingWord, getWordForDifficulty, calculateDamage, calculateMobHealth, calculateXPReward, calculateXPToLevel } from './utils/gameUtils';
@@ -33,6 +34,7 @@ import {
     getDefaultStats, getNewlyUnlockedAchievements, getNewTierAchievements,
     addUniqueToArray, isAchievementUnlocked
 } from './utils/achievementUtils';
+import { useTranslation } from './i18n/context';
 
 // Parent verification privilege constants
 const PARENT_PRIVILEGE_LEVEL = 200;
@@ -47,6 +49,7 @@ const MIC_OFF_TEXT = "Mic Off";
 const BOSS_HEALING_ANIMATION_DURATION = 600;
 
 const App = () => {
+    const { t } = useTranslation();
     const [currentProfile, setCurrentProfile] = useState(() => localStorage.getItem('currentProfile_v1') ? parseInt(localStorage.getItem('currentProfile_v1')) : 1);
     const [profileNames, setProfileNames] = useState(() => localStorage.getItem('heroProfileNames_v1') ? JSON.parse(localStorage.getItem('heroProfileNames_v1')) : { 1: "Player 1", 2: "Player 2", 3: "Player 3" });
     const [parentStatus, setParentStatus] = useState(() => localStorage.getItem('heroParentStatus_v1') ? JSON.parse(localStorage.getItem('heroParentStatus_v1')) : { 1: false, 2: false, 3: false });
@@ -1212,6 +1215,8 @@ const App = () => {
                 onClick={() => { setIsMenuOpen(false); setIsCosmeticsOpen(false); setIsSettingsOpen(true); playClick(); }} 
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
                 style={{ top: '24px', left: '24px' }}
+                aria-label={t('mainMenu.settings')}
+                title={t('mainMenu.settings')}
             >
                 <Settings size={48} className="text-slate-400" />
             </button>
@@ -1219,9 +1224,15 @@ const App = () => {
                 onClick={() => { setIsMenuOpen(false); setIsSettingsOpen(false); setIsCosmeticsOpen(true); playClick(); }} 
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
                 style={{ top: '24px', left: 'calc(24px + 76px + 12px)' }}
+                aria-label={t('mainMenu.cosmetics')}
+                title={t('mainMenu.cosmetics')}
             >
                 <Sparkles size={48} className="text-purple-400" />
             </button>
+            <LanguageSelector
+                style={{ top: '24px', left: 'calc(24px + 2 * (76px + 12px))' }}
+                playSound={playClick}
+            />
             
             {/* Player Health Display - Centered */}
             <div className="absolute z-40 flex gap-1.5" style={{ bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}>{Array(10).fill(0).map((_, i) => (<PixelHeart key={i} size={48} filled={i < playerHealth} />))}</div>
@@ -1277,8 +1288,8 @@ const App = () => {
                 onClick={toggleFullscreen} 
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
                 style={{ top: '24px', right: 'calc(24px + 76px + 12px)' }} 
-                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} 
-                title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                aria-label={isFullscreen ? t('mainMenu.exitFullscreen') : t('mainMenu.enterFullscreen')} 
+                title={isFullscreen ? t('mainMenu.exitFullscreen') : t('mainMenu.enterFullscreen')}
             >
                 {isFullscreen ? <Minimize size={48} /> : <Maximize size={48} />}
             </button>
@@ -1286,6 +1297,8 @@ const App = () => {
                 onClick={() => { setIsSettingsOpen(false); setIsCosmeticsOpen(false); setIsMenuOpen(true); playClick(); }} 
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
                 style={{ top: '24px', right: '24px' }}
+                aria-label={t('mainMenu.achievements')}
+                title={t('mainMenu.achievements')}
             >
                 <Menu size={48} />
             </button>
@@ -1304,6 +1317,8 @@ const App = () => {
                 onClick={() => { setIsMenuOpen(false); setIsCosmeticsOpen(false); setIsSettingsOpen(false); setIsBugReportOpen(true); playClick(); }} 
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg" 
                 style={{ bottom: '24px', right: '24px' }}
+                aria-label={t('mainMenu.reportBug')}
+                title={t('mainMenu.reportBug')}
             >
                 <Bug size={48} className="text-red-400" />
             </button>
