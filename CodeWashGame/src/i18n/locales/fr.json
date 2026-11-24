@@ -1,0 +1,27 @@
+{
+  "$meta": {
+    "code": "fr",
+    "name": "Français"
+  },
+  "language": {
+    "button": "Langue",
+    "title": "Choisir une langue"
+  },
+  "mainMenu": {
+    "settings": "Paramètres",
+    "cosmetics": "Cosmétiques",
+    "achievements": "Succès",
+    "reportBug": "Signaler un bug",
+    "enterFullscreen": "Passer en plein écran",
+    "exitFullscreen": "Quitter le plein écran"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "selectFile": "Sauvegardes",
+    "audioConfiguration": "Configuration audio",
+    "musicVolume": "Volume de la musique",
+    "sfxVolume": "Volume des effets",
+    "dangerZone": "Zone de danger",
+    "deleteProgress": "SUPPRIMER LA PROGRESSION"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$meta": {
+    "code": "en",
+    "name": "English"
+  },
+  "language": {
+    "button": "Language",
+    "title": "Choose a language"
+  },
+  "mainMenu": {
+    "settings": "Settings",
+    "cosmetics": "Cosmetics",
+    "achievements": "Achievements",
+    "reportBug": "Report a bug",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen"
+  },
+  "settings": {
+    "title": "Settings",
+    "selectFile": "Select File",
+    "audioConfiguration": "Audio Configuration",
+    "musicVolume": "Music Volume",
+    "sfxVolume": "SFX Volume",
+    "dangerZone": "Danger Zone",
+    "deleteProgress": "DELETE PROFILE PROGRESS"
+  }
+}
