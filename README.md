@@ -9,7 +9,8 @@ The technical debt register lives in `docs/DEBT.md`.
 
 ## Prerequisites
 
-- Node.js 20 or newer
+- Node.js 24.15 or newer (enforced by `engines` in `CodeWashGame/package.json`;
+  the test environment needs it, and `@electron/rebuild` wants 22.12+)
 - npm
 
 ## Install

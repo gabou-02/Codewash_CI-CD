@@ -107,7 +107,9 @@ Dated, so every claim of progress can be checked against a commit.
 - **D24 · Bug Report button is a stub** : "Whoa... That sucks...", no form, no close button.
   This is the Bug Reporting mission. (days, open)
 - **D25 · Fragile build** : undocumented rolldown-vite alias, Windows-only target, 162 MB of
-  .wav in the exe. (days, open)
+  .wav in the exe. The CI also ran Node 20 while the toolchain needs newer (fixed:
+  workflows and `engines` now pin 24.15+, after jsdom workers failed to start on 20).
+  (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
 
