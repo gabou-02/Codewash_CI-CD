@@ -112,31 +112,35 @@ Dated, so every claim of progress can be checked against a commit.
   (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
-
-## 5. Later (P3)
-
-- **D31 · i18n layer has no plural rules** · `src/i18n/translator.js` : keys
-  interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
-  helper or `Intl.PluralRules` the first time a counted string is translated.
-  Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
+- **D33 · `format:check` exists but is not enforced** : Prettier and the
+  `format:check` script are installed, yet no CI step runs them, so a badly
+  formatted commit still merges. Demonstrated once already: the PR that added
+  Prettier failed its own `format:check` on `vite.config.js` while the job was
+  green. (hours, open)
 - **D32 · Most UI strings are still inline English** : the settings drawer and
   the main-menu buttons are extracted; the mini-games (`SkillCard.jsx`), the
   achievement drawer, the cosmetics drawer and the modals are not. Blocks a
   complete Translation delivery. (days, open)
+
+## 5. Later (P3)
 
 - **D27 · Four product names** + stock Vite favicon. (hours, open)
 - **D28 · No accessibility** : 2 aria-labels, no keyboard, mic-only reading. (week+, open)
 - **D29 · Debug leftovers in UI** : 28 console.log, "LOGO PLACEHOLDER", "WIN". (hours, open)
 - **D30 · Inconsistent rules** : wrong answers free in writing, Simon bonus discarded.
   (hours, open)
+- **D31 · i18n layer has no plural rules** · `src/i18n/translator.js` : keys
+  interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
+  helper or `Intl.PluralRules` the first time a counted string is translated.
+  Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
 
 ## 6. Risk matrix
 
 |  | Low likelihood | Medium | High |
 |---|---|---|---|
 | **High impact** | D21 | D02, D04, D13 | D01, D05, D06, D07, D08 |
-| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10 |
-| **Low impact** | D19, D27 | D20, D28, D29 | D15 |
+| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33 |
+| **Low impact** | D19, D27, D31 | D20, D28, D29, D32 | D15 |
 
 ## 7. Attack plan
 
@@ -146,6 +150,6 @@ Dated, so every claim of progress can be checked against a commit.
    CI gates (D08), minimal seams (D06).
 3. **Visible fixes under test**: D01, D03, D11, D15. Mid-term demo material.
 4. **Hotspots**: D05, D04, D02, D16, D17. Re-measure after each PR.
-5. **The 4 missions**: Performance (D17, D23, D25), Bug Reporting (D24), Themes (D12, D13),
-   Translation.
+5. **The 4 missions**: Bug Reporting (D24), Translation (D32), Themes (D11, D12, D13),
+   Trivia (new game).
 6. **Handover**: ADRs, runbook, changelog; this file maps the remaining debt.
