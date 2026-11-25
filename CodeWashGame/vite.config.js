@@ -16,10 +16,10 @@ export default defineConfig({
       // Ratchet: raise these as coverage grows, never lower them
       // without adding a debt item (see docs/DEBT.md).
       thresholds: {
-        lines: 14,
-        statements: 14,
-        functions: 15,
-        branches: 9,
+        lines: 49,
+        statements: 49,
+        functions: 44,
+        branches: 41,
         "src/utils/gameUtils.js": { lines: 80 },
         "src/utils/achievementUtils.js": { lines: 90 },
         // i18n layer: written with tests, kept at 100 on purpose.
