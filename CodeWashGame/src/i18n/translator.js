@@ -7,7 +7,7 @@
  */
 
 /** Language used when a key is missing from the active catalog. */
-export const DEFAULT_LANGUAGE = 'en';
+export const DEFAULT_LANGUAGE = "en";
 
 /** Matches {{placeholder}} in a translation string. */
 const PLACEHOLDER_PATTERN = /\{\{\s*([\w.]+)\s*\}\}/g;
@@ -18,14 +18,14 @@ const PLACEHOLDER_PATTERN = /\{\{\s*([\w.]+)\s*\}\}/g;
  * catalog can never inject an object into the UI.
  */
 export const resolveKey = (catalog, key) => {
-    if (!catalog || typeof key !== 'string' || key === '') return undefined;
+  if (!catalog || typeof key !== "string" || key === "") return undefined;
 
-    const found = key.split('.').reduce((node, segment) => {
-        if (node === null || typeof node !== 'object') return undefined;
-        return node[segment];
-    }, catalog);
+  const found = key.split(".").reduce((node, segment) => {
+    if (node === null || typeof node !== "object") return undefined;
+    return node[segment];
+  }, catalog);
 
-    return typeof found === 'string' ? found : undefined;
+  return typeof found === "string" ? found : undefined;
 };
 
 /**
@@ -34,13 +34,13 @@ export const resolveKey = (catalog, key) => {
  * during review instead of silently rendering "undefined".
  */
 export const interpolate = (template, vars) => {
-    if (typeof template !== 'string') return template;
-    if (!vars) return template;
+  if (typeof template !== "string") return template;
+  if (!vars) return template;
 
-    return template.replace(PLACEHOLDER_PATTERN, (match, name) => {
-        const value = vars[name];
-        return value === undefined || value === null ? match : String(value);
-    });
+  return template.replace(PLACEHOLDER_PATTERN, (match, name) => {
+    const value = vars[name];
+    return value === undefined || value === null ? match : String(value);
+  });
 };
 
 /**
@@ -49,13 +49,13 @@ export const interpolate = (template, vars) => {
  * untranslated screen readable and makes the gap obvious in a screenshot.
  */
 export const translate = (catalogs, language, key, vars) => {
-    const catalogSet = catalogs || {};
-    const template =
-        resolveKey(catalogSet[language], key) ??
-        resolveKey(catalogSet[DEFAULT_LANGUAGE], key) ??
-        key;
+  const catalogSet = catalogs || {};
+  const template =
+    resolveKey(catalogSet[language], key) ??
+    resolveKey(catalogSet[DEFAULT_LANGUAGE], key) ??
+    key;
 
-    return interpolate(template, vars);
+  return interpolate(template, vars);
 };
 
 /**
@@ -64,27 +64,33 @@ export const translate = (catalogs, language, key, vars) => {
  * Catalogs with no `$meta.name` are skipped rather than shown unnamed.
  */
 export const listLanguages = (catalogs) =>
-    Object.entries(catalogs || {})
-        .map(([code, catalog]) => ({
-            code,
-            name: catalog && catalog.$meta ? catalog.$meta.name : undefined,
-        }))
-        .filter((language) => typeof language.name === 'string')
-        .sort((a, b) => a.name.localeCompare(b.name));
+  Object.entries(catalogs || {})
+    .map(([code, catalog]) => ({
+      code,
+      name: catalog && catalog.$meta ? catalog.$meta.name : undefined,
+    }))
+    .filter((language) => typeof language.name === "string")
+    .sort((a, b) => a.name.localeCompare(b.name));
 
 /**
  * Picks the language to start on: a stored choice wins, then any catalog
  * matching the host language ("fr-FR" matches the "fr" catalog), then the
  * default. Takes its inputs as arguments so tests need no browser globals.
  */
-export const pickInitialLanguage = (catalogs, storedLanguage, systemLanguage) => {
-    const available = new Set(Object.keys(catalogs || {}));
+export const pickInitialLanguage = (
+  catalogs,
+  storedLanguage,
+  systemLanguage,
+) => {
+  const available = new Set(Object.keys(catalogs || {}));
 
-    if (available.has(storedLanguage)) return storedLanguage;
+  if (available.has(storedLanguage)) return storedLanguage;
 
-    const systemBase =
-        typeof systemLanguage === 'string' ? systemLanguage.split('-')[0] : undefined;
-    if (available.has(systemBase)) return systemBase;
+  const systemBase =
+    typeof systemLanguage === "string"
+      ? systemLanguage.split("-")[0]
+      : undefined;
+  if (available.has(systemBase)) return systemBase;
 
-    return DEFAULT_LANGUAGE;
+  return DEFAULT_LANGUAGE;
 };

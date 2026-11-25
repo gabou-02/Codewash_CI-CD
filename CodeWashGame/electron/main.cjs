@@ -1,5 +1,5 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
 let mainWindow;
 
@@ -17,21 +17,23 @@ function createWindow() {
   });
 
   // Load the built game
-  mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+  mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
 
   // Prevent opening developer tools in production for a cleaner experience
   if (app.isPackaged) {
-    mainWindow.webContents.on('before-input-event', (event, input) => {
+    mainWindow.webContents.on("before-input-event", (event, input) => {
       // Block F12 and common devtools shortcuts
-      if (input.key === 'F12' || 
-          (input.control && input.shift && input.key === 'I') ||
-          (input.control && input.shift && input.key === 'C')) {
+      if (
+        input.key === "F12" ||
+        (input.control && input.shift && input.key === "I") ||
+        (input.control && input.shift && input.key === "C")
+      ) {
         event.preventDefault();
       }
     });
   }
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     mainWindow = null;
   });
 }
@@ -40,13 +42,13 @@ function createWindow() {
 app.whenReady().then(createWindow);
 
 // Quit when all windows are closed (Windows & Linux behavior)
-app.on('window-all-closed', () => {
+app.on("window-all-closed", () => {
   // On macOS, apps typically stay active until user quits explicitly
   // But for a game meant for children, it's better to quit immediately
   app.quit();
 });
 
-app.on('activate', () => {
+app.on("activate", () => {
   // On macOS, re-create window when dock icon is clicked and no windows exist
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
