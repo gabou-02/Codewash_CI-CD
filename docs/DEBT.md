@@ -40,9 +40,20 @@ graph TD
 - Lines: `find src electron -name '*.js*' -not -name '._*' -exec wc -l {} +`
 - Complexity: ESLint rule `complexity` (threshold 10), JSX enabled
 - Duplication: `npx jscpd src electron --min-tokens 50`
+- Coverage: `npm run test:coverage` (v8 provider, `include: ['src/**']`)
 
 Re-measure after each phase.
 </details>
+
+### Measurement log
+
+Dated, so every claim of progress can be checked against a commit.
+
+| Date | Change | Coverage (lines) | Note |
+|---|---|---|---|
+| 2026-11-12 | baseline `415bedb` | 0 % | project as received |
+| 2026-11-19 | D08 safety net | 19.3 % | game formulas under characterization tests |
+| 2026-11-24 | i18n layer (Translation mission) | 51.6 % | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file |
 
 ## 3. Fix first (P1)
 
@@ -96,11 +107,22 @@ Re-measure after each phase.
 - **D24 · Bug Report button is a stub** : "Whoa... That sucks...", no form, no close button.
   This is the Bug Reporting mission. (days, open)
 - **D25 · Fragile build** : undocumented rolldown-vite alias, Windows-only target, 162 MB of
-  .wav in the exe. (days, open)
+  .wav in the exe. The CI also ran Node 20 while the toolchain needs newer (fixed:
+  workflows and `engines` now pin 24.15+, after jsdom workers failed to start on 20).
+  (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
 
 ## 5. Later (P3)
+
+- **D31 · i18n layer has no plural rules** · `src/i18n/translator.js` : keys
+  interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
+  helper or `Intl.PluralRules` the first time a counted string is translated.
+  Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
+- **D32 · Most UI strings are still inline English** : the settings drawer and
+  the main-menu buttons are extracted; the mini-games (`SkillCard.jsx`), the
+  achievement drawer, the cosmetics drawer and the modals are not. Blocks a
+  complete Translation delivery. (days, open)
 
 - **D27 · Four product names** + stock Vite favicon. (hours, open)
 - **D28 · No accessibility** : 2 aria-labels, no keyboard, mic-only reading. (week+, open)
