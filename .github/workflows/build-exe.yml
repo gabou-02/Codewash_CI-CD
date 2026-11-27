@@ -30,6 +30,8 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          # The lockfile is not at the repo root (D37).
+          cache-dependency-path: CodeWashGame/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -40,11 +42,12 @@ jobs:
       - name: Build Electron app
         run: npm run electron:build
 
+      # Paths of uses: steps are relative to the workspace, not working-directory (D37).
       - name: Upload Windows Portable EXE
         uses: actions/upload-artifact@v4
         with:
           name: LevelUpRPG-Windows-Portable
-          path: release/LevelUpRPG-Portable.exe
+          path: CodeWashGame/release/LevelUpRPG-Portable.exe
           if-no-files-found: error
 
       - name: Create Release (on version tag)
@@ -69,7 +72,7 @@ jobs:
             1. Download `LevelUpRPG-Portable.exe`
             2. Double-click to launch
             3. Have fun!
-          files: release/LevelUpRPG-Portable.exe
+          files: CodeWashGame/release/LevelUpRPG-Portable.exe
           draft: false
           prerelease: false
         env:
