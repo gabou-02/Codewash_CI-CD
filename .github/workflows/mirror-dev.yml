@@ -10,6 +10,13 @@ concurrency:
 jobs:
   mirror:
     runs-on: ubuntu-latest
+    # The mirror copies .github/ to the school repo, where these workflows run
+    # again on an organisation whose Actions budget is exhausted: the jobs die
+    # at startup in about three seconds, having run no step, and show up red.
+    # Pinning them to the working repo makes the school copy skip cleanly.
+    # Running the pipeline here and mirroring the result is the whole point of
+    # the setup (see README).
+    if: github.repository == 'gabou-02/Codewash_CI-CD'
     steps:
       - uses: actions/checkout@v4
         with:
