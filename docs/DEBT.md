@@ -54,25 +54,34 @@ Dated, so every claim of progress can be checked against a commit.
 | 2026-11-12 | baseline `415bedb` | 0 % | project as received |
 | 2026-11-19 | D08 safety net | 19.3 % | game formulas under characterization tests |
 | 2026-11-24 | i18n layer (Translation mission) | 51.6 % | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file |
+| 2026-11-25 | Prettier on the whole codebase (PR #1) | 49.5 % | same tests, line count changed by the reformat: not comparable with the rows above. New reference for the global thresholds |
+| 2026-11-27 | D02 fix + profile loading extracted | 53.3 % | `src/profile/` at 100 %; `App.jsx` 1840 -> 1659 lines |
 
 ## 3. Fix first (P1)
 
 - **D01 · Game almost silent** · `soundManager.js:18` : looks in `sounds/ui/`, files are in
   `sounds/ui/ui/` (same for mob); errors hidden by `.catch(() => {})`. (hours, open)
-- **D02 · Profile switch corrupts data** · `App.jsx:925` : stats never reloaded, autosave
-  writes old player's stats into the new profile. (days, open)
+- **D02 · Profile switch corrupts data** · `App.jsx` `handleSwitchProfile` : stats and
+  border cosmetics never reloaded, so both autosaves write the old player's stats and
+  border into the new profile. (days, done: profile loading extracted to
+  `src/profile/profileStorage.js` under characterization tests, switch now reloads
+  everything through `loadProfile`; regression test `App.profileSwitch.test.jsx`)
 - **D03 · Corrupted save = white screen** · `App.jsx:51` : JSON.parse without try/catch at
   startup, no error boundary. (hours, open)
 - **D04 · Double effects in dev** · `App.jsx:569` : sounds/badges/timers fired from inside a
   state updater; StrictMode runs it twice. (week+, open)
 - **D05 · Two god components** : App.jsx (one 361-line function) and SkillCard.jsx
-  (complexity 107, 1100-char lines). Untestable. (week+, open)
-- **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, open)
+  (complexity 107, 1100-char lines). Untestable. (week+, in progress: profile loading
+  moved out with D02, App.jsx 1840 -> 1659 lines after Prettier)
+- **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, in
+  progress: `src/i18n/storage.js` and `src/profile/profileStorage.js` take an injected
+  storage; saves are still written straight to localStorage by App)
 - **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours,
   done: workflow now runs on tags/manual only; it was in fact inert, `.github` sits
   in CodeWashGame/ and GitHub only reads workflows at the repo root)
 - **D08 · No test/lint/coverage in CI**. (days, done: Vitest + 19 characterization
-  tests on the game formulas, root ci.yml runs lint + build + tests + coverage gate)
+  tests on the game formulas, root ci.yml runs format check + lint (no warnings) + build +
+  tests + global coverage ratchet + diff coverage >= 80 % on PRs, report posted on the PR)
 - **D09 · 374 `._*` junk files** : cause all 28 lint errors, block lint as a gate. (hours,
   done: lint 28 errors -> 0)
 - **D10 · No README / .gitignore**. (hours, done)
@@ -95,7 +104,8 @@ Dated, so every claim of progress can be checked against a commit.
   hit, reset = page reload. (days, open)
 - **D18 · Copy-paste x6** : letter-slot input x4, audio snippet x6, tooltips x3. (days, open)
 - **D19 · Dead code** : 2 orphan files, 9 unused exports, ~330 lines dead CSS, inert
-  tailwind.config.js. (hours, open)
+  tailwind.config.js; `readProfileStats` builds an `initial` object it never uses
+  (`src/profile/profileStorage.js`, kept as-is by the D02 extraction). (hours, open)
 - **D20 · 3 competing stylesheets** : 1302-line CSS string in JSX + index.css duplicates +
   inert Tailwind config. (days, open)
 - **D21 · Mic feature likely dead in the exe** : Google cloud API without keys, no fallback;
@@ -129,6 +139,18 @@ Dated, so every claim of progress can be checked against a commit.
 - **D29 · Debug leftovers in UI** : 28 console.log, "LOGO PLACEHOLDER", "WIN". (hours, open)
 - **D30 · Inconsistent rules** : wrong answers free in writing, Simon bonus discarded.
   (hours, open)
+- **D33 · `format:check` exists but is not enforced** : Prettier was installed without a
+  CI step. (hours, done: `Format check` step in `ci.yml`, PR #1)
+- **D34 · Diff-coverage gate bypassed once** · PR #1 : the PR reformats the whole codebase,
+  so diff-cover counts every line as modified (43 % < 80 %). Formatting only, verified by
+  rebuilding the PR from dev + Prettier (only 2 eslint comments differ). Merged with that
+  single check red, before branch rulesets existed. (hours, done, not to be repeated)
+- **D35 · Trailing commas in profile cards** · `ProfileCard.jsx` : shows "P2," and
+  "Player 2," (present since `415bedb`). (hours, open)
+- **D36 · Warning on every fresh profile** · `profileStorage.js` `loadTheme` / `loadStats` :
+  `JSON.parse(null).theme` throws when a profile has no save yet, caught and logged with
+  `console.warn`. Harmless for the player, noisy in the console; frozen by the
+  characterization tests. (hours, open)
 
 ## 6. Risk matrix
 
