@@ -9,6 +9,7 @@ import {
   loadStats,
   readProfileStats,
   loadCosmetics,
+  loadProfile,
 } from "./profileStorage";
 import { SKILL_DATA } from "../constants/gameData";
 import { getDefaultStats } from "../utils/achievementUtils";
@@ -310,5 +311,28 @@ describe("loadCosmetics", () => {
       border: "rainbow",
       borderColor: "#123456",
     });
+  });
+});
+
+// loadProfile : vérifie qu'un seul appel lit tout ce qu'il faut pour afficher
+// un profil (skills, thème, stats, bordure et couleur). C'est ce que le
+// changement de profil doit recharger pour corriger D02.
+describe("loadProfile", () => {
+  it("reads skills, theme, stats and border of one profile", () => {
+    const storage = fakeStorage({
+      heroSkills_v23_p2: JSON.stringify({
+        skills: { math: { level: 4 } },
+        theme: "kpop",
+        stats: { totalMobsDefeated: 42 },
+      }),
+      borderEffect_p2: "rainbow",
+      borderColor_p2: "#123456",
+    });
+    const profile = loadProfile(2, storage);
+    expect(profile.skills.math.level).toBe(4);
+    expect(profile.theme).toBe("kpop");
+    expect(profile.stats.totalMobsDefeated).toBe(42);
+    expect(profile.border).toBe("rainbow");
+    expect(profile.borderColor).toBe("#123456");
   });
 });
