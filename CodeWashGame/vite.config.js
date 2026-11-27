@@ -24,6 +24,7 @@ export default defineConfig({
         "src/utils/achievementUtils.js": { lines: 90 },
         // i18n layer: written with tests, kept at 100 on purpose.
         "src/i18n/**": { lines: 100, branches: 100, functions: 100 },
+        "src/theme/**": { lines: 100, branches: 100, functions: 100 },
         "src/components/ui/LanguageSelector.jsx": { lines: 100, branches: 100 },
         "src/components/drawers/SettingsDrawer.jsx": {
           lines: 100,
