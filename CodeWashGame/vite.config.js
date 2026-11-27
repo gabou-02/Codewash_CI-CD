@@ -22,6 +22,8 @@ export default defineConfig({
         branches: 41,
         "src/utils/gameUtils.js": { lines: 80 },
         "src/utils/achievementUtils.js": { lines: 90 },
+        // Profile save loading (D02): new module, kept at 100 on purpose.
+        "src/profile/**": { lines: 100, branches: 100, functions: 100 },
         // i18n layer: written with tests, kept at 100 on purpose.
         "src/i18n/**": { lines: 100, branches: 100, functions: 100 },
         "src/components/ui/LanguageSelector.jsx": { lines: 100, branches: 100 },
