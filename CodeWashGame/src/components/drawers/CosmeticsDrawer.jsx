@@ -173,7 +173,9 @@ const CosmeticsDrawer = ({
           <h3 className="text-xl text-blue-300 mb-5 font-bold flex items-center gap-3 uppercase tracking-wider">
             <Sparkles size={20} /> Theme Select
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          {/* Scrollable: the list grew past what fits once two themes were
+              added, and it keeps fitting as more are declared. */}
+          <div className="max-h-72 overflow-y-auto pr-2 grid grid-cols-2 gap-4">
             {THEMES_LIST.map((theme) => (
               <button
                 key={theme.id}
