@@ -9,8 +9,10 @@ The technical debt register lives in `docs/DEBT.md`.
 
 ## Prerequisites
 
-- Node.js 24.15 or newer (enforced by `engines` in `CodeWashGame/package.json`;
-  the test environment needs it, and `@electron/rebuild` wants 22.12+)
+- Node.js **22.22.2+ or 24.15+** (Node 25 is not supported). The range is
+  enforced by `engines` in `CodeWashGame/package.json` and mirrors `jsdom`, our
+  strictest dependency. Check yours with `node --version`; the CI runs Node 24.
+  Node 20 is too old: the jsdom test workers fail to start on it.
 - npm
 
 ## Install
