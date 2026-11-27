@@ -165,13 +165,21 @@ Dated, so every claim of progress can be checked against a commit.
   `JSON.parse(null).theme` throws when a profile has no save yet, caught and logged with
   `console.warn`. Harmless for the player, noisy in the console; frozen by the
   characterization tests. (hours, open)
+- **D37 · Release workflow paths broken after the move** · `build-exe.yml` : moving the
+  workflow to the repo root (D07) fixed the `run:` steps with `working-directory`, but
+  `uses:` steps ignore it. `setup-node` looked for `package-lock.json` at the root (no
+  `cache-dependency-path`), and the upload and release steps looked for
+  `release/LevelUpRPG-Portable.exe` instead of `CodeWashGame/release/`. Any `v*` tag or
+  manual run would have failed before producing the exe. Found while writing the
+  changelog, never observed in a run. (hours, done: both paths point into
+  `CodeWashGame/`; to confirm with one manual run of the workflow)
 
 ## 6. Risk matrix
 
 |  | Low likelihood | Medium | High |
 |---|---|---|---|
 | **High impact** | D21 | D02, D04, D13 | D01, D05, D06, D07, D08 |
-| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33 |
+| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33, D37 |
 | **Low impact** | D19, D27, D31, D34 | D20, D28, D29, D32 | D15, D35, D36 |
 
 ## 7. Attack plan
