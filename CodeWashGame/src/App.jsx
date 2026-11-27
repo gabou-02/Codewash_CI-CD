@@ -1560,7 +1560,6 @@ const App = () => {
         <div className="z-10 relative mb-[-30px] md:mb-[-50px] pointer-events-none opacity-90">
           <SafeImage
             src={currentThemeData.assets.logo}
-            fallbackSrc="https://placehold.co/800x300/333/FFD700?text=LOGO+PLACEHOLDER&font=monsterrat"
             alt="Game Logo"
             className="w-[480px] md:w-[720px] lg:w-[960px] object-contain drop-shadow-2xl"
           />
