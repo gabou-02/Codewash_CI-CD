@@ -6,23 +6,59 @@ Tags per item: effort (hours / days / week+) and status (open / in progress / do
 
 ## 1. Map
 
-Kids RPG: React 19 + Vite, packaged for Windows with Electron (plain 1280x720 window, no IPC).
+Kids RPG: React 19 + Vite, packaged for Windows with Electron (plain 1280x720
+window, no IPC).
+
+Updated 2026-11-27. Dashed nodes are the layers extracted since the baseline;
+everything solid is still as received. `src/theme/` arrives with PR #6.
 
 ```mermaid
 graph TD
-    APP[App.jsx<br>1492 lines, holds EVERYTHING] --> SKILL[SkillCard.jsx<br>778 lines, all 3 mini-games]
-    APP --> DRAWERS[3 drawers]
-    APP --> UI[small UI pieces]
-    APP --> UTILS[utils: game math, sounds, achievements]
+    MAIN[main.jsx<br>mounts I18nProvider] --> APP
+
+    APP["App.jsx<br>1492 lines, 31 useState<br>still holds almost everything"]
+    APP --> SKILL["SkillCard.jsx<br>778 lines, complexity 107<br>all 3 mini-games"]
+    APP --> DRAWERS[3 drawers<br>settings / cosmetics / achievements]
+    APP --> MODALS[modals<br>reset / bug report / parental]
+    APP --> UI[small UI pieces<br>SafeImage, PixelHeart, toasts]
+    APP --> UTILS[utils<br>game math, sounds, achievements]
     SKILL --> UTILS
-    UTILS --> DATA[constants: gameData, achievements]
+    UTILS --> DATA[constants<br>gameData, achievements, assets]
+
+    APP -.-> THEME
+    APP -.-> I18N
+    DRAWERS -.-> I18N
+    DRAWERS -.-> THEME
+    THEME -.-> DATA
+
+    subgraph extracted [Extracted, tested, injectable]
+        I18N["src/i18n/<br>translator · catalogs · storage<br>context · I18nProvider"]
+        THEME["src/theme/<br>resolveTheme"]
+    end
+
+    classDef new stroke-dasharray: 5 5
+    class I18N,THEME,extracted new
 ```
 
-- State: all in App.jsx (31 useState, no context). Props passed by hand (up to 21).
-- I/O called directly everywhere, no wrapper: localStorage (28 sites), `new Audio` (11),
-  mic, `Math.random` (34), `setTimeout` (28). This is what blocks testing.
-- Saves: one JSON blob per profile (`heroSkills_v23_p1/2/3`), rewritten on every hit.
-- Critical flows to freeze with tests: save/load, combat/XP, achievements, mini-games, themes.
+Where the state and the I/O live:
+
+| Concern | Where | Status |
+|---|---|---|
+| Game state | `App.jsx`, 31 `useState`, no context, props passed by hand (up to 21) | as received (D05) |
+| Saves | `localStorage`, one JSON blob per profile (`heroSkills_v23_p1/2/3`), rewritten on every hit | as received (D17) |
+| Language choice | `localStorage` via `src/i18n/storage.js`, the only module touching the global | extracted |
+| Theme resolution | `src/theme/resolveTheme.js`, pure, merges over a default theme | extracted (PR #6) |
+| Audio | `new Audio` in 11 places, plus `soundManager.js` | as received (D01, D06) |
+| Microphone | Google cloud API, no keys, no fallback | as received (D21) |
+| Randomness, timers | `Math.random` x34 and `setTimeout` x28, reached as globals | as received (D06, D16) |
+
+The two extracted layers follow the policy the subject asks for: I/O isolated
+behind one module, dependencies injected, pure logic unit-tested without a DOM.
+They are the shape the rest should converge to (D06).
+
+Critical flows to freeze with tests: save/load, combat/XP, achievements,
+mini-games, themes. Done so far: game formulas, achievements, i18n, theme
+resolution, theme assets. Not yet: save/load, combat.
 
 ## 2. Baseline metrics
 
@@ -92,7 +128,9 @@ Dated, so every claim of progress can be checked against a commit.
   `gameData.themes.test.js`, which reads the real `public/` tree and fails on any
   dangling theme asset. Theme-specific art stays with D12)
 - **D12 · Theme = wallpaper only** : empty mob lists, hardcoded colors everywhere, shuffled
-  theme identities. (days, open)
+  theme identities. The "crafting table" the subject names is the **writing** mini-game
+  (`fantasyName: "Crafting Table"`), not cleaning, which is "Chest Management".
+  (days, open)
 - **D13 · Minecraft hardcoded in the domain** : mobs, badges, words, skill names; shown in
   every theme. Blocks the Themes mission. (week+, open)
 - **D14 · XP math inconsistent** · `App.jsx:711` : multi-level gain reuses one threshold;
