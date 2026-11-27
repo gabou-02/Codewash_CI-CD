@@ -221,3 +221,19 @@ export const loadCosmetics = (profileId, storage = localStorage) => ({
   border: storage.getItem(`borderEffect_p${profileId}`) || "solid",
   borderColor: storage.getItem(`borderColor_p${profileId}`) || "#FFD700",
 });
+
+/**
+ * Everything App needs to show a profile, read in one go. Switching profile
+ * must reload all of it: anything left out keeps the previous player's value
+ * and the autosave then writes it into the new profile (D02).
+ */
+export const loadProfile = (profileId, storage = localStorage) => {
+  const { border, borderColor } = loadCosmetics(profileId, storage);
+  return {
+    skills: loadSkills(profileId, storage),
+    theme: loadTheme(profileId, storage),
+    stats: loadStats(profileId, storage),
+    border,
+    borderColor,
+  };
+};

@@ -79,6 +79,7 @@ import {
   loadStats,
   readProfileStats,
   loadCosmetics,
+  loadProfile,
 } from "./profile/profileStorage";
 
 // Parent verification privilege constants
@@ -875,10 +876,15 @@ const App = () => {
   const handleSwitchProfile = (newId) => {
     if (newId === currentProfile) return;
     playClick();
-    const newSkills = loadSkills(newId);
-    const newTheme = loadTheme(newId);
-    setSkills(newSkills);
-    setActiveTheme(newTheme);
+    // Reload every per-profile value, otherwise the autosave writes the
+    // previous player's data into the new profile (D02).
+    const profile = loadProfile(newId);
+    setSkills(profile.skills);
+    setActiveTheme(profile.theme);
+    setStats(profile.stats);
+    // Direct setter on purpose: handleBorderChange would count a border change.
+    setSelectedBorder(profile.border);
+    setBorderColor(profile.borderColor);
     setCurrentProfile(newId);
   };
   const handleRenameProfile = (id, newName) => {
