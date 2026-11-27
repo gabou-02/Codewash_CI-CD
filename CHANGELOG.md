@@ -109,9 +109,14 @@ back to `docs/DEBT.md` and forward to the pull request that did it.
 - **The release workflow never ran** (D07). `build-exe.yml` sat in
   `CodeWashGame/.github/workflows/`, and GitHub only reads workflows at the
   repository root, so the exe was never built by the CI. It now lives in
-  `.github/workflows/` and runs `npm` from `CodeWashGame/`. Pushing a `v*` tag is
-  meant to build the Windows exe and publish a release, a manual run to build it
-  as an artifact only.
+  `.github/workflows/` and runs `npm` from `CodeWashGame/`. Pushing a `v*` tag
+  builds the Windows exe and publishes a release, a manual run builds it as an
+  artifact only.
+- **The moved release workflow still pointed at the wrong paths** (D37). Steps
+  that call an action ignore `working-directory`, so the npm cache looked for the
+  lockfile at the repository root and the upload and release steps looked for
+  the exe in `release/` instead of `CodeWashGame/release/`. Both would have failed
+  the first tagged build.
 - **374 committed `._*` junk files** (D09), which caused all 28 lint errors and
   blocked using lint as a gate. Lint went from 28 errors to 0.
 - **Release workflow could not find `package.json`**, so the exe build failed.
