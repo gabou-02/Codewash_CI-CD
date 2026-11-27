@@ -16,10 +16,10 @@ export default defineConfig({
       // Ratchet: raise these as coverage grows, never lower them
       // without adding a debt item (see docs/DEBT.md).
       thresholds: {
-        lines: 49,
-        statements: 49,
-        functions: 44,
-        branches: 41,
+        lines: 53,
+        statements: 52,
+        functions: 46,
+        branches: 50,
         "src/utils/gameUtils.js": { lines: 80 },
         "src/utils/achievementUtils.js": { lines: 90 },
         // Profile save loading (D02): new module, kept at 100 on purpose.
