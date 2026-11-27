@@ -54,11 +54,17 @@ Dated, so every claim of progress can be checked against a commit.
 | 2026-11-12 | baseline `415bedb` | 0 % | project as received |
 | 2026-11-19 | D08 safety net | 19.3 % | game formulas under characterization tests |
 | 2026-11-24 | i18n layer (Translation mission) | 51.6 % | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file |
+| 2026-11-25 | Prettier + five CI gates (D33) | 49.5 % | whole tree formatted; global thresholds ratcheted 14 % -> 49 % |
+| 2026-11-27 | theme assets under test (D11) | 49.6 % | 101 -> 133 tests; `SafeImage.jsx` 0 % -> 100 % |
 
 ## 3. Fix first (P1)
 
-- **D01 · Game almost silent** · `soundManager.js:18` : looks in `sounds/ui/`, files are in
-  `sounds/ui/ui/` (same for mob); errors hidden by `.catch(() => {})`. (hours, open)
+- **D01 · Game almost silent** · two separate causes, both live. (a) `soundManager.js`
+  looks in `sounds/ui/`, files are in `sounds/ui/ui/` (same for mob); errors hidden by
+  `.catch(() => {})`. (b) `gameData.jsx:21-32` declares 10 flat `assets/sounds/*.wav`
+  paths matching no file at all, and they are consumed: `SkillCard.jsx:309` does
+  `new Audio(BASE_ASSETS.audio.mismatch)`. Cause (b) found while fixing D11.
+  (hours, open)
 - **D02 · Profile switch corrupts data** · `App.jsx:925` : stats never reloaded, autosave
   writes old player's stats into the new profile. (days, open)
 - **D03 · Corrupted save = white screen** · `App.jsx:51` : JSON.parse without try/catch at
@@ -79,8 +85,12 @@ Dated, so every claim of progress can be checked against a commit.
 
 ## 4. Fix soon (P2)
 
-- **D11 · 3 of 4 themes visibly broken** · `gameData.jsx:189-208` : 4 missing images, spy
-  background = minecraft.png. (hours, open)
+- **D11 · 3 of 4 themes visibly broken** · `gameData.jsx` `THEME_CONFIG` : 4 missing
+  images, spy background = minecraft.png. (hours, done: spy background -> spy.png, the
+  three dangling card backs -> the generic memorycard.jpg, spy logo -> explicit `null`
+  since no art exists, dead `fallbackSrc` prop removed from App.jsx. Guarded by
+  `gameData.themes.test.js`, which reads the real `public/` tree and fails on any
+  dangling theme asset. Theme-specific art stays with D12)
 - **D12 · Theme = wallpaper only** : empty mob lists, hardcoded colors everywhere, shuffled
   theme identities. (days, open)
 - **D13 · Minecraft hardcoded in the domain** : mobs, badges, words, skill names; shown in
@@ -108,35 +118,43 @@ Dated, so every claim of progress can be checked against a commit.
   This is the Bug Reporting mission. (days, open)
 - **D25 · Fragile build** : undocumented rolldown-vite alias, Windows-only target, 162 MB of
   .wav in the exe. The CI also ran Node 20 while the toolchain needs newer (fixed:
-  workflows and `engines` now pin 24.15+, after jsdom workers failed to start on 20).
-  (days, open)
+  workflows pin Node 24 and `engines` mirrors jsdom's range, `^22.22.2 || ^24.15.0 ||
+  >=26.0.0`, after jsdom workers failed to start on 20. npm only warns on a mismatch;
+  add `.npmrc` with `engine-strict=true` to make it block). (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
-
-## 5. Later (P3)
-
-- **D31 · i18n layer has no plural rules** · `src/i18n/translator.js` : keys
-  interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
-  helper or `Intl.PluralRules` the first time a counted string is translated.
-  Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
 - **D32 · Most UI strings are still inline English** : the settings drawer and
   the main-menu buttons are extracted; the mini-games (`SkillCard.jsx`), the
   achievement drawer, the cosmetics drawer and the modals are not. Blocks a
   complete Translation delivery. (days, open)
+- **D33 · `format:check` exists but is not enforced** : Prettier and the
+  `format:check` script were installed, yet no CI step ran them, so a badly
+  formatted commit still merged. Demonstrated once: the PR that added Prettier
+  failed its own `format:check` on `vite.config.js` while the job was green.
+  (hours, done: `ci.yml` now runs five gates per PR, format, lint at
+  `--max-warnings 0`, build, coverage thresholds, and 80 % diff coverage via
+  `diff-cover`; coverage published as artifact and PR comment; `dev` added to the
+  push triggers. Static analysis (CodeQL) is still absent, see the planning)
+
+## 5. Later (P3)
 
 - **D27 · Four product names** + stock Vite favicon. (hours, open)
 - **D28 · No accessibility** : 2 aria-labels, no keyboard, mic-only reading. (week+, open)
 - **D29 · Debug leftovers in UI** : 28 console.log, "LOGO PLACEHOLDER", "WIN". (hours, open)
 - **D30 · Inconsistent rules** : wrong answers free in writing, Simon bonus discarded.
   (hours, open)
+- **D31 · i18n layer has no plural rules** · `src/i18n/translator.js` : keys
+  interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
+  helper or `Intl.PluralRules` the first time a counted string is translated.
+  Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
 
 ## 6. Risk matrix
 
 |  | Low likelihood | Medium | High |
 |---|---|---|---|
 | **High impact** | D21 | D02, D04, D13 | D01, D05, D06, D07, D08 |
-| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10 |
-| **Low impact** | D19, D27 | D20, D28, D29 | D15 |
+| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33 |
+| **Low impact** | D19, D27, D31 | D20, D28, D29, D32 | D15 |
 
 ## 7. Attack plan
 
@@ -146,6 +164,6 @@ Dated, so every claim of progress can be checked against a commit.
    CI gates (D08), minimal seams (D06).
 3. **Visible fixes under test**: D01, D03, D11, D15. Mid-term demo material.
 4. **Hotspots**: D05, D04, D02, D16, D17. Re-measure after each PR.
-5. **The 4 missions**: Performance (D17, D23, D25), Bug Reporting (D24), Themes (D12, D13),
-   Translation.
+5. **The 4 missions**: Bug Reporting (D24), Translation (D32), Themes (D11, D12, D13),
+   Trivia (new game).
 6. **Handover**: ADRs, runbook, changelog; this file maps the remaining debt.
