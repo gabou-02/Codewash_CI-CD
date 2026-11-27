@@ -282,7 +282,7 @@ export const THEME_CONFIG = {
     },
     assets: {
       logo: "assets/themes/kpop_logo.png",
-      cardBack: "assets/themes/kpop_memorycard.jpg",
+      cardBack: "assets/themes/memorycard.jpg",
       mobs: {},
     },
     skills: {
@@ -303,7 +303,7 @@ export const THEME_CONFIG = {
     },
     assets: {
       logo: "assets/themes/pokemon_logo.png",
-      cardBack: "assets/themes/pokemon_memorycard.jpg",
+      cardBack: "assets/themes/memorycard.jpg",
       mobs: {},
     },
     skills: {
@@ -318,13 +318,16 @@ export const THEME_CONFIG = {
   spy: {
     name: "Spy",
     style: {
-      backgroundImage: `url('assets/themes/minecraft.png')`,
+      backgroundImage: `url('assets/themes/spy.png')`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     },
     assets: {
-      logo: "assets/themes/spy_logo.png",
-      cardBack: "assets/themes/spy_memorycard.jpg",
+      // No spy logo art exists yet. null is deliberate: SafeImage then draws
+      // its own placeholder instead of requesting a file that 404s. Supplying
+      // the artwork belongs to the Themes mission (D12).
+      logo: null,
+      cardBack: "assets/themes/memorycard.jpg",
       mobs: {},
     },
     skills: {
