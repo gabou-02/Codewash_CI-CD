@@ -23,5 +23,16 @@
     "sfxVolume": "SFX Volume",
     "dangerZone": "Danger Zone",
     "deleteProgress": "DELETE PROFILE PROGRESS"
+  },
+  "miniGames": {
+    "round": "Round: {{count}}",
+    "watch": "Watch!",
+    "yourTurn": "Your turn!",
+    "listening": "Listening...",
+    "micOff": "Mic Off",
+    "tapToSpeak": "Tap to Speak",
+    "complete": "Complete!",
+    "target": "Target",
+    "difficulty": "Difficulty {{level}}"
   }
 }

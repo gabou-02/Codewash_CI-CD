@@ -24,6 +24,8 @@ import {
 import { playClick, getSfxVolume } from "../../utils/soundManager";
 import { calculateXPToLevel } from "../../utils/gameUtils";
 import { AURA_ADJECTIVES } from "../../utils/mobDisplayUtils";
+import { isMicStatus } from "../../constants/micStatus";
+import { useTranslation } from "../../i18n/context";
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
@@ -106,6 +108,7 @@ const SkillCard = ({
   borderColor,
   bossHealing,
 }) => {
+  const { t } = useTranslation();
   const [mathInput, setMathInput] = useState("");
   const [isHit, setIsHit] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
@@ -372,8 +375,7 @@ const SkillCard = ({
       config.challengeType === "reading" &&
       isBattling &&
       spokenText &&
-      spokenText !== "Listening..." &&
-      spokenText !== "Mic Off"
+      !isMicStatus(spokenText)
     ) {
       // Check if spoken text changed
       if (spokenText !== prevSpokenTextRef.current) {
@@ -723,14 +725,16 @@ const SkillCard = ({
                   <div className="w-full flex flex-col items-center gap-1">
                     {/* Round counter */}
                     <div className="text-white text-lg font-bold py-1">
-                      Round: {completedRounds}{" "}
+                      {t("miniGames.round", { count: completedRounds })}{" "}
                       {isShowingSequence && (
                         <span className="text-yellow-400 animate-pulse">
-                          Watch!
+                          {t("miniGames.watch")}
                         </span>
                       )}
                       {!isShowingSequence && simonGameActive && (
-                        <span className="text-green-400">Your turn!</span>
+                        <span className="text-green-400">
+                          {t("miniGames.yourTurn")}
+                        </span>
                       )}
                     </div>
                     {/* Dynamic axolotl formation based on difficulty */}
@@ -826,8 +830,13 @@ const SkillCard = ({
                         <div
                           className={`absolute bottom-1 text-xs ${isReadingWrong ? "text-red-400" : "text-gray-400"}`}
                         >
-                          {spokenText ||
-                            (isListening ? "Listening..." : "Mic Off")}
+                          {isMicStatus(spokenText) || !spokenText
+                            ? t(
+                                isListening
+                                  ? "miniGames.listening"
+                                  : "miniGames.micOff",
+                              )
+                            : spokenText}
                         </div>
                       )}
                     </div>
@@ -965,7 +974,7 @@ const SkillCard = ({
                           <>
                             <Mic className="inline text-gray-500" />
                             <span className="text-xs uppercase font-bold text-stone-400">
-                              Tap to Speak
+                              {t("miniGames.tapToSpeak")}
                             </span>
                           </>
                         )}
@@ -976,7 +985,7 @@ const SkillCard = ({
                         onClick={() => setShowParentalModal(true)}
                         className="w-full bg-green-600 hover:bg-green-500 text-white text-3xl font-bold py-4 rounded shadow-[0_4px_0_#166534] active:shadow-none active:translate-y-[4px] transition-all"
                       >
-                        Complete!
+                        {t("miniGames.complete")}
                       </button>
                     )}
                     {config.challengeType !== "cleaning" &&
@@ -1098,7 +1107,7 @@ const SkillCard = ({
                       {/* Enemy Name */}
                       <div className="bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                         <div className="text-[8px] text-amber-900 uppercase font-bold tracking-wide">
-                          Target
+                          {t("miniGames.target")}
                         </div>
                         <div className="text-stone-900 font-black text-sm leading-tight">
                           {displayMobNameWithAura}
@@ -1180,7 +1189,7 @@ const SkillCard = ({
             <div className="relative">
               <SafeImage
                 src={DIFFICULTY_IMAGES[difficulty] || DIFFICULTY_IMAGES[1]}
-                alt={`Difficulty ${difficulty}`}
+                alt={t("miniGames.difficulty", { level: difficulty })}
                 className="w-8 h-8 object-contain"
               />
               {/* Difficulty level number indicator in bottom-right corner */}

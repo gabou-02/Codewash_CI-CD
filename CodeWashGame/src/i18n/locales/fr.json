@@ -23,5 +23,16 @@
     "sfxVolume": "Volume des effets",
     "dangerZone": "Zone de danger",
     "deleteProgress": "SUPPRIMER LA PROGRESSION"
+  },
+  "miniGames": {
+    "round": "Manche : {{count}}",
+    "watch": "Regarde !",
+    "yourTurn": "À toi !",
+    "listening": "J'écoute...",
+    "micOff": "Micro coupé",
+    "tapToSpeak": "Appuie pour parler",
+    "complete": "Terminé !",
+    "target": "Cible",
+    "difficulty": "Difficulté {{level}}"
   }
 }
