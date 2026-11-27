@@ -1,3 +1,4 @@
+import { listThemes } from "../theme/resolveTheme";
 export const BASE_ASSETS = {
   skillIcons: {
     Reading: "assets/skills/reading_icon.gif",
@@ -234,6 +235,7 @@ export const DIFFICULTY_IMAGES = {
 export const THEME_CONFIG = {
   minecraft: {
     name: "Minecraft",
+    preview: "assets/themes/minecraft.png",
     style: {
       backgroundImage: `url('assets/themes/minecraft.png')`,
       backgroundSize: "cover",
@@ -275,6 +277,7 @@ export const THEME_CONFIG = {
   },
   kpop: {
     name: "K-Pop Demon Hunters",
+    preview: "assets/themes/kpop.jpg",
     style: {
       backgroundImage: `url('assets/themes/kpop.jpg')`,
       backgroundSize: "cover",
@@ -296,6 +299,7 @@ export const THEME_CONFIG = {
   },
   pokemon: {
     name: "Pokemon",
+    preview: "assets/themes/pokemon.jpg",
     style: {
       backgroundImage: `url('assets/themes/pokemon.jpg')`,
       backgroundSize: "cover",
@@ -317,6 +321,7 @@ export const THEME_CONFIG = {
   },
   spy: {
     name: "Spy",
+    preview: "assets/themes/spy.png",
     style: {
       backgroundImage: `url('assets/themes/spy.png')`,
       backgroundSize: "cover",
@@ -339,14 +344,59 @@ export const THEME_CONFIG = {
       patterns: { name: "Code Breaking", boss: "Hacker" },
     },
   },
+  fantasy: {
+    name: "Fantasy",
+    preview: "assets/themes/fantasy.png",
+    style: {
+      backgroundImage: `url('assets/themes/fantasy.png')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    assets: {
+      // No dedicated logo or card back art yet; the resolver falls back to the
+      // default theme's, and SafeImage covers anything still missing.
+      logo: null,
+      cardBack: "assets/themes/memorycard.jpg",
+      mobs: {},
+    },
+    skills: {
+      reading: { name: "Runes", boss: "Lich King" },
+      math: { name: "Alchemy", boss: "Stone Golem" },
+      writing: { name: "Scribing", boss: "Elder Dragon" },
+      cleaning: { name: "Looting", boss: "Mimic" },
+      memory: { name: "Spellbook", boss: "Wisp" },
+      patterns: { name: "Rituals", boss: "Cult Leader" },
+    },
+  },
+  scifi: {
+    name: "Sci-Fi",
+    preview: "assets/themes/Scifi.png",
+    style: {
+      backgroundImage: `url('assets/themes/Scifi.png')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+    assets: {
+      logo: null,
+      cardBack: "assets/themes/memorycard.jpg",
+      mobs: {},
+    },
+    skills: {
+      reading: { name: "Decryption", boss: "Rogue AI" },
+      math: { name: "Ballistics", boss: "War Machine" },
+      writing: { name: "Signals", boss: "Mainframe" },
+      cleaning: { name: "Salvage", boss: "Scrap Titan" },
+      memory: { name: "Databanks", boss: "Archivist" },
+      patterns: { name: "Navigation", boss: "Star Chart" },
+    },
+  },
 };
 
-export const THEMES_LIST = [
-  { id: "minecraft", name: "Minecraft", img: "assets/themes/minecraft.png" },
-  { id: "kpop", name: "K-Pop Demon Hunters", img: "assets/themes/kpop.jpg" },
-  { id: "pokemon", name: "Pokemon", img: "assets/themes/pokemon.jpg" },
-  { id: "spy", name: "Spy", img: "assets/themes/spy.png" },
-];
+/**
+ * Derived from THEME_CONFIG so the menu can never disagree with the config.
+ * Adding a theme is adding one entry above; there is no list to update.
+ */
+export const THEMES_LIST = listThemes(THEME_CONFIG);
 export const BADGE_TIERS = [
   { level: 20, title: "Wood" },
   { level: 40, title: "Stone" },
