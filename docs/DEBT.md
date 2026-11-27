@@ -56,6 +56,7 @@ Dated, so every claim of progress can be checked against a commit.
 | 2026-11-24 | i18n layer (Translation mission) | 51.6 % | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file |
 | 2026-11-25 | Prettier + five CI gates (D33) | 49.5 % | whole tree formatted; global thresholds ratcheted 14 % -> 49 % |
 | 2026-11-27 | theme assets under test (D11) | 49.6 % | 101 -> 133 tests; `SafeImage.jsx` 0 % -> 100 % |
+| 2026-11-27 | D02 fix + profile loading extracted, merged with D11 | 53.4 % | 159 tests; `src/profile/` at 100 %; `App.jsx` 1840 -> 1658 lines |
 
 ## 3. Fix first (P1)
 
@@ -65,15 +66,21 @@ Dated, so every claim of progress can be checked against a commit.
   paths matching no file at all, and they are consumed: `SkillCard.jsx:309` does
   `new Audio(BASE_ASSETS.audio.mismatch)`. Cause (b) found while fixing D11.
   (hours, open)
-- **D02 · Profile switch corrupts data** · `App.jsx:925` : stats never reloaded, autosave
-  writes old player's stats into the new profile. (days, open)
+- **D02 · Profile switch corrupts data** · `App.jsx` `handleSwitchProfile` : stats and
+  border cosmetics never reloaded, so both autosaves write the old player's stats and
+  border into the new profile. (days, done: profile loading extracted to
+  `src/profile/profileStorage.js` under characterization tests, switch now reloads
+  everything through `loadProfile`; regression test `App.profileSwitch.test.jsx`)
 - **D03 · Corrupted save = white screen** · `App.jsx:51` : JSON.parse without try/catch at
   startup, no error boundary. (hours, open)
 - **D04 · Double effects in dev** · `App.jsx:569` : sounds/badges/timers fired from inside a
   state updater; StrictMode runs it twice. (week+, open)
 - **D05 · Two god components** : App.jsx (one 361-line function) and SkillCard.jsx
-  (complexity 107, 1100-char lines). Untestable. (week+, open)
-- **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, open)
+  (complexity 107, 1100-char lines). Untestable. (week+, in progress: profile loading
+  moved out with D02, App.jsx 1840 -> 1658 lines after Prettier)
+- **D06 · No seams** : all I/O hit as globals; wrappers needed before testing. (days, in
+  progress: `src/i18n/storage.js` and `src/profile/profileStorage.js` take an injected
+  storage; saves are still written straight to localStorage by App)
 - **D07 · CI publishes a public release on every push** · `build-exe.yml:43`. (hours,
   done: workflow now runs on tags/manual only; it was in fact inert, `.github` sits
   in CodeWashGame/ and GitHub only reads workflows at the repo root)
@@ -105,7 +112,8 @@ Dated, so every claim of progress can be checked against a commit.
   hit, reset = page reload. (days, open)
 - **D18 · Copy-paste x6** : letter-slot input x4, audio snippet x6, tooltips x3. (days, open)
 - **D19 · Dead code** : 2 orphan files, 9 unused exports, ~330 lines dead CSS, inert
-  tailwind.config.js. (hours, open)
+  tailwind.config.js; `readProfileStats` builds an `initial` object it never uses
+  (`src/profile/profileStorage.js`, kept as-is by the D02 extraction). (hours, open)
 - **D20 · 3 competing stylesheets** : 1302-line CSS string in JSX + index.css duplicates +
   inert Tailwind config. (days, open)
 - **D21 · Mic feature likely dead in the exe** : Google cloud API without keys, no fallback;
@@ -147,6 +155,16 @@ Dated, so every claim of progress can be checked against a commit.
   interpolate `{{vars}}` but cannot say "1 badge / 2 badges". Needs a `plural()`
   helper or `Intl.PluralRules` the first time a counted string is translated.
   Accepted knowingly, see `docs/adr/0001-i18n.md`. (hours, open)
+- **D34 · Diff-coverage gate bypassed once** · PR #1 : the PR reformats the whole codebase,
+  so diff-cover counts every line as modified (43 % < 80 %). Formatting only, verified by
+  rebuilding the PR from dev + Prettier (only 2 eslint comments differ). Merged with that
+  single check red, before branch rulesets existed. (hours, done, not to be repeated)
+- **D35 · Trailing commas in profile cards** · `ProfileCard.jsx` : shows "P2," and
+  "Player 2," (present since `415bedb`). (hours, open)
+- **D36 · Warning on every fresh profile** · `profileStorage.js` `loadTheme` / `loadStats` :
+  `JSON.parse(null).theme` throws when a profile has no save yet, caught and logged with
+  `console.warn`. Harmless for the player, noisy in the console; frozen by the
+  characterization tests. (hours, open)
 
 ## 6. Risk matrix
 
@@ -154,7 +172,7 @@ Dated, so every claim of progress can be checked against a commit.
 |---|---|---|---|
 | **High impact** | D21 | D02, D04, D13 | D01, D05, D06, D07, D08 |
 | **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33 |
-| **Low impact** | D19, D27, D31 | D20, D28, D29, D32 | D15 |
+| **Low impact** | D19, D27, D31, D34 | D20, D28, D29, D32 | D15, D35, D36 |
 
 ## 7. Attack plan
 
