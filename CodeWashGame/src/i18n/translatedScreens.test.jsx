@@ -55,6 +55,17 @@ describe("screens translated to French", () => {
     expect(container.textContent).not.toContain("Total Level:");
   });
 
+  it("achievement names and descriptions", () => {
+    const { container } = inFrench(
+      <MenuDrawer isOpen skills={skills} stats={getDefaultStats()} />,
+    );
+
+    expect(container.textContent).toContain("Chasseur de fantômes");
+    expect(container.textContent).toContain("Bats ton premier ennemi");
+    expect(container.textContent).not.toContain("Ghost Buster");
+    expect(container.textContent).not.toContain("Defeat your first enemy");
+  });
+
   it("cosmetics drawer", () => {
     const { container } = inFrench(
       <CosmeticsDrawer

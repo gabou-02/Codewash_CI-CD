@@ -22,7 +22,7 @@ const ACHIEVEMENT_GRID_COLUMNS = 6;
 const TOOLTIP_POSITION_THRESHOLD = 4; // Columns >= this show tooltip on left
 
 const MenuDrawer = ({ isOpen, skills, stats }) => {
-  const { t } = useTranslation();
+  const { t, tOr } = useTranslation();
   const totalLevels = Object.values(skills).reduce(
     (acc, s) => acc + s.level,
     0,
@@ -203,7 +203,13 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
                 let nextTier = null;
                 let progress = 0;
                 let tierProgress = 0;
-                let displayName = achievement.name;
+                // Translated with the English text as fallback, so an
+                // untranslated achievement still reads rather than showing
+                // a raw key.
+                let displayName = tOr(
+                  `achievementList.${achievement.id}.name`,
+                  achievement.name,
+                );
                 let tierColor = null;
 
                 if (achievement.isTiered) {
@@ -215,11 +221,17 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
                   nextTier = getNextTier(achievement.id, stats, skills);
                   progress = achievement.getProgress(stats, skills);
                   tierProgress = getTierProgress(achievement.id, stats, skills);
-                  displayName = getAchievementDisplayName(
+                  const tieredName = getAchievementDisplayName(
                     achievement.id,
                     stats,
                     skills,
                   );
+                  // Below tier 1 this returns the base name, which lives in
+                  // achievementList, not in the per-tier table.
+                  displayName =
+                    tieredName === achievement.name
+                      ? displayName
+                      : tOr(`achievementTiers.${tieredName}`, tieredName);
 
                   if (unlocked && currentTierIndex >= 0) {
                     tierColor = TIER_COLORS[currentTierIndex + 1];
@@ -296,7 +308,10 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
                             {displayName}
                           </h4>
                           <p className="text-xs text-slate-400 mt-0.5">
-                            {achievement.description}
+                            {tOr(
+                              `achievementList.${achievement.id}.description`,
+                              achievement.description,
+                            )}
                           </p>
                         </div>
                       </div>
@@ -322,7 +337,11 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
                                 ></div>
                               </div>
                               <p className="text-xs text-slate-500 mt-1">
-                                Next: {TIER_NAMES[currentTierIndex + 1]}
+                                Next:{" "}
+                                {tOr(
+                                  `tierNames.${TIER_NAMES[currentTierIndex + 1]}`,
+                                  TIER_NAMES[currentTierIndex + 1],
+                                )}
                               </p>
                             </>
                           )}

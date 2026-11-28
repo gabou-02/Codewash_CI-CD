@@ -170,10 +170,22 @@ Dated, so every claim of progress can be checked against a commit.
 add `.npmrc`with`engine-strict=true` to make it block). (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
-- **D32 · Most UI strings are still inline English** : the settings drawer and
-  the main-menu buttons are extracted; the mini-games (`SkillCard.jsx`), the
-  achievement drawer, the cosmetics drawer and the modals are not. Blocks a
-  complete Translation delivery. (days, open)
+- **D32 · Most UI strings are still inline English** : every screen is now
+  translated. Main menu, settings, the three mini-games and their vocabulary,
+  the achievement and cosmetics drawers, the reset and parental modals, the
+  achievement toast, the death and level-up overlays, and the 19 achievements
+  with their 24 tier names. (days, done: only `BugReportModal.jsx` is left, a
+  6-line stub that the Bug Reporting mission replaces wholesale (D24);
+  translating it now would be thrown away)
+
+  Two traps found on the way, same shape both times: a **display string used as
+  a logic value**. The microphone placeholders are compared in `SkillCard` to
+  tell speech from status, and the reset modal compares the word the player
+  types. Translating either display alone would have broken the feature
+  silently, the reset one making deletion impossible in French. Both are now
+  translated on both sides and pinned by tests. Worth checking for this pattern
+  before translating anything else.
+
 - **D33 · `format:check` exists but is not enforced** : Prettier and the
   `format:check` script were installed, yet no CI step ran them, so a badly
   formatted commit still merged. Demonstrated once: the PR that added Prettier

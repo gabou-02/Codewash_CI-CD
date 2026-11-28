@@ -33,7 +33,12 @@
     "tapToSpeak": "Appuie pour parler",
     "complete": "Terminé !",
     "target": "Cible",
-    "difficulty": "Difficulté {{level}}"
+    "difficulty": "Difficulté {{level}}",
+    "quest": "Quête",
+    "retry": "Réessayer",
+    "skip": "Passer / Réussite manuelle",
+    "skill": "Compétence",
+    "level": "Niveau"
   },
   "skills": {
     "reading": {
@@ -108,6 +113,125 @@
     "locked": "✗ Verrouillé",
     "unlocked": "✓ Débloqué",
     "badgeRequired": "Badge {{badge}} requis",
-    "badgeHint": "Obtiens le badge {{badge}} pour débloquer cet effet"
+    "badgeHint": "Obtiens le badge {{badge}} pour débloquer cet effet",
+    "color": "Couleur"
+  },
+  "achievementList": {
+    "phantom_hunter": {
+      "name": "Chasseur de fantômes",
+      "description": "Attrape des fantômes"
+    },
+    "combined_levels": {
+      "name": "Puissance écrasante",
+      "description": "Atteins un niveau cumulé élevé"
+    },
+    "skill_mastery": {
+      "name": "Touche-à-tout",
+      "description": "Monte toutes les compétences au même rythme"
+    },
+    "first_steps": {
+      "name": "Premiers pas",
+      "description": "Bats ton premier ennemi"
+    },
+    "level_up": {
+      "name": "Niveau supérieur !",
+      "description": "Atteins le niveau 2 dans une compétence"
+    },
+    "fashion_forward": {
+      "name": "Changement de look",
+      "description": "Change de thème pour la première fois"
+    },
+    "framed": {
+      "name": "Encadré !",
+      "description": "Change d'effet de bordure pour la première fois"
+    },
+    "ouch": {
+      "name": "Aïe !",
+      "description": "Meurs pour la première fois"
+    },
+    "dragon_slayer": {
+      "name": "Tueur de dragon",
+      "description": "Bats ton premier boss"
+    },
+    "mini_menace": {
+      "name": "Petite menace",
+      "description": "Bats ton premier mini-boss"
+    },
+    "mini_master": {
+      "name": "Maître des mini-boss",
+      "description": "Bats tous les mini-boss au moins une fois"
+    },
+    "world_ender": {
+      "name": "Fin du monde",
+      "description": "Bats tous les boss au moins une fois"
+    },
+    "monster_manual": {
+      "name": "Bestiaire complet",
+      "description": "Bats tous les monstres ordinaires au moins une fois"
+    },
+    "perfectionist": {
+      "name": "Perfectionniste",
+      "description": "Termine un jeu de mémoire sans aucune erreur"
+    },
+    "speed_demon": {
+      "name": "Rapide comme l'éclair",
+      "description": "Enchaîne 10 combats en une seule session"
+    },
+    "dedicated": {
+      "name": "Assidu",
+      "description": "Joue sur 3 jours différents"
+    },
+    "high_roller": {
+      "name": "Grand joueur",
+      "description": "Atteins la difficulté 7 dans une compétence"
+    },
+    "badge_collector": {
+      "name": "Collectionneur",
+      "description": "Obtiens ton premier badge, quel que soit le palier"
+    },
+    "full_set": {
+      "name": "Collection complète",
+      "description": "Obtiens les 8 paliers de badge sur une compétence"
+    }
+  },
+  "tierNames": {
+    "Bronze": "Bronze",
+    "Silver": "Argent",
+    "Gold": "Or",
+    "Platinum": "Platine",
+    "Emerald": "Émeraude",
+    "Diamond": "Diamant",
+    "Legendary": "Légendaire",
+    "Mythic": "Mythique"
+  },
+  "achievementTiers": {
+    "Bronze Ghost Buster": "Chasseur de fantômes bronze",
+    "Silver Ghost Buster": "Chasseur de fantômes argent",
+    "Gold Ghost Buster": "Chasseur de fantômes or",
+    "Platinum Ghost Buster": "Chasseur de fantômes platine",
+    "Emerald Ghost Buster": "Chasseur de fantômes émeraude",
+    "Diamond Ghost Buster": "Chasseur de fantômes diamant",
+    "Legendary Ghost Buster": "Chasseur de fantômes légendaire",
+    "Mythic Ghost Buster": "Chasseur de fantômes mythique",
+    "Bronze Power": "Puissance bronze",
+    "Silver Power": "Puissance argent",
+    "Gold Power": "Puissance or",
+    "Platinum Power": "Puissance platine",
+    "Emerald Power": "Puissance émeraude",
+    "Diamond Power": "Puissance diamant",
+    "Legendary Power": "Puissance légendaire",
+    "Mythic Power": "Puissance mythique",
+    "Bronze Apprentice": "Apprenti bronze",
+    "Silver Journeyman": "Compagnon argent",
+    "Gold Adept": "Adepte or",
+    "Platinum Expert": "Expert platine",
+    "Emerald Master": "Maître émeraude",
+    "Diamond Grandmaster": "Grand maître diamant",
+    "Legendary Sage": "Sage légendaire",
+    "Mythic Transcendent": "Transcendant mythique"
+  },
+  "profile": {
+    "parent": "Parent ?",
+    "proficiency": "Maîtrise des compétences"
   }
 }

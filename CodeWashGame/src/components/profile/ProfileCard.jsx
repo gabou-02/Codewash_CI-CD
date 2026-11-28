@@ -3,6 +3,7 @@ import { Pencil, Check, Heart, Crown } from "lucide-react";
 import SafeImage from "../ui/SafeImage";
 import ParentalVerificationModal from "../ui/ParentalVerificationModal";
 import { THEMES_LIST, SKILL_DATA } from "../../constants/gameData";
+import { useTranslation } from "../../i18n/context";
 
 const ProfileCard = ({
   id,
@@ -14,6 +15,7 @@ const ProfileCard = ({
   isParent,
   onParentVerified,
 }) => {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [tempName, setTempName] = useState(name);
   const [showParentalModal, setShowParentalModal] = useState(false);
@@ -112,7 +114,7 @@ const ProfileCard = ({
                   className="w-4 h-4 accent-yellow-400 cursor-pointer"
                 />
                 <span className="text-[10px] text-slate-400 font-bold uppercase">
-                  Parent?
+                  {t("profile.parent")}
                 </span>
               </label>
             )}
@@ -185,7 +187,7 @@ const ProfileCard = ({
           <div className="flex-1 flex flex-col min-w-0 pr-2">
             <div className="flex justify-between items-center mb-1">
               <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider drop-shadow-md pl-2">
-                Skill Proficiency
+                {t("profile.proficiency")}
               </span>
             </div>
             <div className="flex-1 bg-black/50 rounded-lg border-2 border-white/10 inner-shadow p-0 overflow-hidden backdrop-blur-sm relative flex items-center">
