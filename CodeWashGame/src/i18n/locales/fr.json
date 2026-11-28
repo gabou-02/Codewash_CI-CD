@@ -72,5 +72,42 @@
       "action": "Résoudre !",
       "task": "Déchiffre la séquence pour débloquer des mécanismes anciens et des trésors cachés !"
     }
+  },
+  "reset": {
+    "title": "Supprimer la progression ?",
+    "question": "Es-tu sûr de vouloir supprimer toute la progression de ce profil ?",
+    "irreversible": "Cette action est irréversible !",
+    "typeToConfirm": {
+      "before": "Tape",
+      "after": "pour confirmer :"
+    },
+    "confirmWord": "SUPPRIMER",
+    "pleaseType": "Tape {{word}} pour confirmer.",
+    "cancel": "Annuler",
+    "confirm": "Supprimer"
+  },
+  "parental": {
+    "question": "Qu'est-ce que c'est ?",
+    "wrong": "Mauvaise réponse. Réessaie !",
+    "submit": "Valider"
+  },
+  "achievements": {
+    "title": "Succès",
+    "totalLevel": "Niveau total :",
+    "badges": "Badges :",
+    "count": "Succès :",
+    "special": "Succès spéciaux",
+    "maxTier": "PALIER MAXIMUM ATTEINT !",
+    "unlockedBanner": "SUCCÈS DÉBLOQUÉ !"
+  },
+  "cosmetics": {
+    "title": "Thèmes et cosmétiques",
+    "themeSelect": "Choix du thème",
+    "borderEffects": "Effets de bordure",
+    "active": "ACTIF",
+    "locked": "✗ Verrouillé",
+    "unlocked": "✓ Débloqué",
+    "badgeRequired": "Badge {{badge}} requis",
+    "badgeHint": "Obtiens le badge {{badge}} pour débloquer cet effet"
   }
 }

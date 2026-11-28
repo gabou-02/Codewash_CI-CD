@@ -5,12 +5,14 @@ import {
   TIER_COLORS,
   TIER_NAMES,
 } from "../../constants/achievements";
+import { useTranslation } from "../../i18n/context";
 
 /**
  * AchievementToast Component
  * Displays a celebratory toast when an achievement is unlocked
  */
 const AchievementToast = ({ achievementId, tierIndex = null }) => {
+  const { t } = useTranslation();
   const achievement = ACHIEVEMENTS[achievementId];
 
   if (!achievement) return null;
@@ -55,7 +57,7 @@ const AchievementToast = ({ achievementId, tierIndex = null }) => {
           {/* Text */}
           <div className="text-left">
             <h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1 uppercase tracking-wide">
-              ACHIEVEMENT UNLOCKED!
+              {t("achievements.unlockedBanner")}
             </h2>
             <p className="text-white text-lg font-bold">{displayName}</p>
             {tierName && (

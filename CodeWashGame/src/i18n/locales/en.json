@@ -72,5 +72,42 @@
       "action": "Solve!",
       "task": "Decipher the sequence to unlock ancient mechanisms and hidden treasures!"
     }
+  },
+  "reset": {
+    "title": "Delete Progress?",
+    "question": "Are you sure you want to delete all progress for this profile?",
+    "irreversible": "This action is irreversible!",
+    "typeToConfirm": {
+      "before": "Type",
+      "after": "to confirm:"
+    },
+    "confirmWord": "DELETE",
+    "pleaseType": "Please type {{word}} to confirm.",
+    "cancel": "Cancel",
+    "confirm": "Delete"
+  },
+  "parental": {
+    "question": "What is this?",
+    "wrong": "Incorrect answer. Try again!",
+    "submit": "Submit"
+  },
+  "achievements": {
+    "title": "Achievements",
+    "totalLevel": "Total Level:",
+    "badges": "Badges:",
+    "count": "Achievements:",
+    "special": "Special Achievements",
+    "maxTier": "MAX TIER REACHED!",
+    "unlockedBanner": "ACHIEVEMENT UNLOCKED!"
+  },
+  "cosmetics": {
+    "title": "Themes & Cosmetics",
+    "themeSelect": "Theme Select",
+    "borderEffects": "Border Effects",
+    "active": "ACTIVE",
+    "locked": "✗ Locked",
+    "unlocked": "✓ Unlocked",
+    "badgeRequired": "{{badge}} Badge Required",
+    "badgeHint": "Earn the {{badge}} badge to unlock this effect"
   }
 }
