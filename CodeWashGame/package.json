@@ -16,8 +16,8 @@
     "preview": "vite preview",
     "electron:dev": "npm run build && electron .",
     "electron:build": "npm run build && electron-builder",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write . \"../*.md\" \"../docs/**/*.md\" \"../.github/**/*.yml\"",
+    "format:check": "prettier --check . \"../*.md\" \"../docs/**/*.md\" \"../.github/**/*.yml\""
   },
   "dependencies": {
     "lucide-react": "^0.555.0",

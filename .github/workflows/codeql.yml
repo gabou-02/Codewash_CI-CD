@@ -1,0 +1,42 @@
+name: CodeQL
+
+# Static analysis, the last quality gate the subject asks for that the
+# pipeline did not have. Runs on the same events as the CI so a pull request
+# is analysed before it can be merged.
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+  # Catches advisories published after a commit was merged.
+  schedule:
+    - cron: "0 3 * * 1"
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    # Same guard as the other workflows: the mirror copies .github/ to the
+    # school repository, whose Actions budget is exhausted (see README).
+    if: github.repository == 'gabou-02/Codewash_CI-CD'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          # security-and-quality adds maintainability rules on top of the
+          # security ones, which is the point of this project.
+          queries: security-and-quality
+
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
