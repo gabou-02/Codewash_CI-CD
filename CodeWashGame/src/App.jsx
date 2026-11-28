@@ -1388,7 +1388,7 @@ const App = () => {
           className="text-9xl text-yellow-400 tracking-widest uppercase mt-[-20px] mb-[95px] z-20 relative drop-shadow-[4px_4px_0_#000]"
           style={{ textShadow: "6px 6px 0 #000" }}
         >
-          Level Up!
+          {t("game.title")}
         </h1>
 
         {/* Left Chevron - Parenthesis style with gradient fade */}
@@ -1567,7 +1567,7 @@ const App = () => {
               </div>
               <div className="text-left">
                 <h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1">
-                  LEVEL {lootBox.level} REACHED!
+                  {t("game.levelReached", { level: lootBox.level })}
                 </h2>
                 <p className="text-stone-300 text-sm">{lootBox.skillName}</p>
               </div>
@@ -1580,7 +1580,7 @@ const App = () => {
               />
               <div>
                 <p className="text-stone-400 text-xs uppercase tracking-wider">
-                  Unlocked
+                  {t("game.unlocked")}
                 </p>
                 <p className="text-2xl text-green-400 font-bold">
                   {lootBox.item}
@@ -1607,12 +1607,10 @@ const App = () => {
               className="text-8xl font-bold text-red-500 drop-shadow-[0_0_20px_rgba(255,0,0,0.8)]"
               style={{ textShadow: "4px 4px 0 #000, -2px -2px 0 #000" }}
             >
-              YOU DIED
+              {t("game.youDied")}
             </h1>
-            <p className="text-2xl text-red-300 mt-4">Level -1</p>
-            <p className="text-lg text-stone-400 mt-2">
-              Take a moment to rest...
-            </p>
+            <p className="text-2xl text-red-300 mt-4">{t("game.levelLost")}</p>
+            <p className="text-lg text-stone-400 mt-2">{t("game.rest")}</p>
           </div>
         </div>
       )}
@@ -1625,9 +1623,11 @@ const App = () => {
               className="text-6xl font-bold text-green-400 drop-shadow-[0_0_20px_rgba(0,255,0,0.8)]"
               style={{ textShadow: "4px 4px 0 #000" }}
             >
-              LEVEL RESTORED!
+              {t("game.levelRestored")}
             </h1>
-            <p className="text-2xl text-yellow-400 mt-4">Welcome back, hero!</p>
+            <p className="text-2xl text-yellow-400 mt-4">
+              {t("game.welcomeBack")}
+            </p>
           </div>
         </div>
       )}

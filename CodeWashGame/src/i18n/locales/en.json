@@ -33,7 +33,12 @@
     "tapToSpeak": "Tap to Speak",
     "complete": "Complete!",
     "target": "Target",
-    "difficulty": "Difficulty {{level}}"
+    "difficulty": "Difficulty {{level}}",
+    "quest": "Quest",
+    "retry": "Retry",
+    "skip": "Skip / Manual Success",
+    "skill": "Skill",
+    "level": "Level"
   },
   "skills": {
     "reading": {
@@ -108,6 +113,125 @@
     "locked": "✗ Locked",
     "unlocked": "✓ Unlocked",
     "badgeRequired": "{{badge}} Badge Required",
-    "badgeHint": "Earn the {{badge}} badge to unlock this effect"
+    "badgeHint": "Earn the {{badge}} badge to unlock this effect",
+    "color": "Color"
+  },
+  "achievementList": {
+    "phantom_hunter": {
+      "name": "Ghost Buster",
+      "description": "Catch Phantoms"
+    },
+    "combined_levels": {
+      "name": "Power Overwhelming",
+      "description": "Reach high combined levels"
+    },
+    "skill_mastery": {
+      "name": "Jack of All Trades",
+      "description": "Level all skills evenly"
+    },
+    "first_steps": {
+      "name": "First Steps",
+      "description": "Defeat your first enemy"
+    },
+    "level_up": {
+      "name": "Level Up!",
+      "description": "Reach Level 2 in any skill"
+    },
+    "fashion_forward": {
+      "name": "Fashion Forward",
+      "description": "Change your theme for the first time"
+    },
+    "framed": {
+      "name": "Framed!",
+      "description": "Change your border effect for the first time"
+    },
+    "ouch": {
+      "name": "Ouch!",
+      "description": "Die for the first time"
+    },
+    "dragon_slayer": {
+      "name": "Dragon Slayer",
+      "description": "Defeat your first boss"
+    },
+    "mini_menace": {
+      "name": "Mini Menace",
+      "description": "Defeat your first mini-boss"
+    },
+    "mini_master": {
+      "name": "Mini Master",
+      "description": "Defeat all mini-bosses at least once"
+    },
+    "world_ender": {
+      "name": "World Ender",
+      "description": "Defeat all bosses at least once"
+    },
+    "monster_manual": {
+      "name": "Monster Manual",
+      "description": "Defeat all regular mobs at least once"
+    },
+    "perfectionist": {
+      "name": "Perfectionist",
+      "description": "Complete a memory game without any mismatches"
+    },
+    "speed_demon": {
+      "name": "Speed Demon",
+      "description": "Complete 10 battles in a single session"
+    },
+    "dedicated": {
+      "name": "Dedicated",
+      "description": "Play on 3 different days"
+    },
+    "high_roller": {
+      "name": "High Roller",
+      "description": "Reach difficulty 7 on any skill"
+    },
+    "badge_collector": {
+      "name": "Badge Collector",
+      "description": "Earn your first badge (any tier)"
+    },
+    "full_set": {
+      "name": "Full Set",
+      "description": "Earn all 8 badge tiers on a single skill"
+    }
+  },
+  "tierNames": {
+    "Bronze": "Bronze",
+    "Silver": "Silver",
+    "Gold": "Gold",
+    "Platinum": "Platinum",
+    "Emerald": "Emerald",
+    "Diamond": "Diamond",
+    "Legendary": "Legendary",
+    "Mythic": "Mythic"
+  },
+  "achievementTiers": {
+    "Bronze Ghost Buster": "Bronze Ghost Buster",
+    "Silver Ghost Buster": "Silver Ghost Buster",
+    "Gold Ghost Buster": "Gold Ghost Buster",
+    "Platinum Ghost Buster": "Platinum Ghost Buster",
+    "Emerald Ghost Buster": "Emerald Ghost Buster",
+    "Diamond Ghost Buster": "Diamond Ghost Buster",
+    "Legendary Ghost Buster": "Legendary Ghost Buster",
+    "Mythic Ghost Buster": "Mythic Ghost Buster",
+    "Bronze Power": "Bronze Power",
+    "Silver Power": "Silver Power",
+    "Gold Power": "Gold Power",
+    "Platinum Power": "Platinum Power",
+    "Emerald Power": "Emerald Power",
+    "Diamond Power": "Diamond Power",
+    "Legendary Power": "Legendary Power",
+    "Mythic Power": "Mythic Power",
+    "Bronze Apprentice": "Bronze Apprentice",
+    "Silver Journeyman": "Silver Journeyman",
+    "Gold Adept": "Gold Adept",
+    "Platinum Expert": "Platinum Expert",
+    "Emerald Master": "Emerald Master",
+    "Diamond Grandmaster": "Diamond Grandmaster",
+    "Legendary Sage": "Legendary Sage",
+    "Mythic Transcendent": "Mythic Transcendent"
+  },
+  "profile": {
+    "parent": "Parent?",
+    "proficiency": "Skill Proficiency"
   }
 }

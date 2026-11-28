@@ -785,7 +785,7 @@ const SkillCard = ({
                           onClick={startSimonGame}
                           className="bg-blue-600 hover:bg-blue-500 text-white text-xl font-bold py-3 px-6 rounded shadow-[0_4px_0_#1e40af] active:shadow-none active:translate-y-[4px] transition-all"
                         >
-                          Retry
+                          {t("miniGames.retry")}
                         </button>
                       </div>
                     )}
@@ -1004,7 +1004,7 @@ const SkillCard = ({
                           onClick={() => onMathSubmit(challenge?.answer)}
                           className="mt-auto text-xs text-gray-500 underline hover:text-white self-center"
                         >
-                          Skip / Manual Success
+                          {t("miniGames.skip")}
                         </button>
                       )}
                   </>
@@ -1127,7 +1127,7 @@ const SkillCard = ({
                       <div className="flex gap-1.5">
                         <div className="flex-1 bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                           <div className="text-[8px] text-amber-900 uppercase font-bold">
-                            Skill
+                            {t("miniGames.skill")}
                           </div>
                           <div className="text-stone-900 font-bold text-xs leading-tight">
                             {skillName}
@@ -1135,7 +1135,7 @@ const SkillCard = ({
                         </div>
                         <div className="flex-1 bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                           <div className="text-[8px] text-amber-900 uppercase font-bold">
-                            Level
+                            {t("miniGames.level")}
                           </div>
                           <div
                             className={`font-black text-base leading-tight ${levelTextColor}`}
@@ -1152,7 +1152,7 @@ const SkillCard = ({
                       {/* Quest/Task */}
                       <div className="bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                         <div className="text-[8px] text-amber-900 uppercase font-bold mb-0.5">
-                          Quest
+                          {t("miniGames.quest")}
                         </div>
                         <div className="text-stone-800 text-[10px] leading-snug italic font-medium">
                           {tOr(

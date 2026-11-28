@@ -320,7 +320,7 @@ const CosmeticsDrawer = ({
                             />
                             <div className="flex-1">
                               <div className="text-[9px] text-slate-400 mb-0.5">
-                                Color
+                                {t("cosmetics.color")}
                               </div>
                               <div className="text-[11px] font-mono text-white">
                                 {borderColor.toUpperCase()}

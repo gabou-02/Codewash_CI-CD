@@ -12,21 +12,24 @@ import { useTranslation } from "../../i18n/context";
  * Displays a celebratory toast when an achievement is unlocked
  */
 const AchievementToast = ({ achievementId, tierIndex = null }) => {
-  const { t } = useTranslation();
+  const { t, tOr } = useTranslation();
   const achievement = ACHIEVEMENTS[achievementId];
 
   if (!achievement) return null;
 
   // Determine display values
-  let displayName = achievement.name;
+  let displayName = tOr(
+    `achievementList.${achievementId}.name`,
+    achievement.name,
+  );
   let tierColor = null;
   let tierName = null;
 
   if (achievement.isTiered && tierIndex !== null && tierIndex >= 0) {
     const tier = achievement.tiers[tierIndex];
-    displayName = tier.tierName;
+    displayName = tOr(`achievementTiers.${tier.tierName}`, tier.tierName);
     tierColor = TIER_COLORS[tierIndex + 1];
-    tierName = TIER_NAMES[tierIndex];
+    tierName = tOr(`tierNames.${TIER_NAMES[tierIndex]}`, TIER_NAMES[tierIndex]);
   }
 
   const Icon = achievement.icon;
