@@ -6,6 +6,7 @@ import {
   resolveKey,
   interpolate,
   translate,
+  translateOr,
   listLanguages,
   pickInitialLanguage,
 } from "./translator";
@@ -90,6 +91,45 @@ describe("translate", () => {
   it("survives an unknown language and a missing catalog set", () => {
     expect(translate(CATALOGS, "de", "settings.title")).toBe("Settings");
     expect(translate(undefined, "en", "settings.title")).toBe("settings.title");
+  });
+});
+
+describe("translateOr", () => {
+  it("uses the translation when there is one", () => {
+    expect(translateOr(CATALOGS, "fr", "settings.title", "Fallback")).toBe(
+      "Paramètres",
+    );
+  });
+
+  it("falls back to the default language before the fallback value", () => {
+    expect(
+      translateOr(CATALOGS, "fr", "settings.nested.deep", "Fallback"),
+    ).toBe("Deep");
+  });
+
+  it("returns the fallback instead of the key when nothing is translated", () => {
+    expect(
+      translateOr(CATALOGS, "fr", "skills.spy.name", "Intel Analysis"),
+    ).toBe("Intel Analysis");
+  });
+
+  it("still interpolates the fallback", () => {
+    expect(
+      translateOr(CATALOGS, "fr", "absent.key", "Level {{level}}", {
+        level: 4,
+      }),
+    ).toBe("Level 4");
+  });
+
+  it("returns the key when there is neither translation nor fallback", () => {
+    expect(translateOr(CATALOGS, "fr", "absent.key")).toBe("absent.key");
+    expect(translateOr(CATALOGS, "fr", "absent.key", null)).toBe("absent.key");
+  });
+
+  it("survives a missing catalog set", () => {
+    expect(translateOr(undefined, "fr", "absent.key", "Fallback")).toBe(
+      "Fallback",
+    );
   });
 });
 

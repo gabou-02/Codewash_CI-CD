@@ -23,5 +23,54 @@
     "sfxVolume": "Volume des effets",
     "dangerZone": "Zone de danger",
     "deleteProgress": "SUPPRIMER LA PROGRESSION"
+  },
+  "miniGames": {
+    "round": "Manche : {{count}}",
+    "watch": "Regarde !",
+    "yourTurn": "À toi !",
+    "listening": "J'écoute...",
+    "micOff": "Micro coupé",
+    "tapToSpeak": "Appuie pour parler",
+    "complete": "Terminé !",
+    "target": "Cible",
+    "difficulty": "Difficulté {{level}}"
+  },
+  "skills": {
+    "reading": {
+      "name": "Lecture",
+      "game": "Table d'enchantement",
+      "action": "Enchanter !",
+      "task": "Prononce les mots anciens pour lancer des enchantements et vaincre tes ennemis !"
+    },
+    "math": {
+      "name": "Calcul",
+      "game": "Redstone",
+      "action": "Calculer !",
+      "task": "Alimente tes circuits de redstone pour activer des pièges et déjouer les monstres !"
+    },
+    "writing": {
+      "name": "Écriture",
+      "game": "Table de craft",
+      "action": "Fabriquer !",
+      "task": "Épelle la recette pour forger des armes et des armures légendaires !"
+    },
+    "cleaning": {
+      "name": "Rangement",
+      "game": "Gestion des coffres",
+      "action": "Ranger !",
+      "task": "Trie ton butin et prépare ton inventaire pour les aventures à venir !"
+    },
+    "memory": {
+      "name": "Mémoire",
+      "game": "Paires et éclosions",
+      "action": "Associer !",
+      "task": "Trouve les paires identiques pour faire éclore des créatures rares dans ta ferme !"
+    },
+    "patterns": {
+      "name": "Logique",
+      "game": "Construction logique",
+      "action": "Résoudre !",
+      "task": "Déchiffre la séquence pour débloquer des mécanismes anciens et des trésors cachés !"
+    }
   }
 }

@@ -23,5 +23,54 @@
     "sfxVolume": "SFX Volume",
     "dangerZone": "Danger Zone",
     "deleteProgress": "DELETE PROFILE PROGRESS"
+  },
+  "miniGames": {
+    "round": "Round: {{count}}",
+    "watch": "Watch!",
+    "yourTurn": "Your turn!",
+    "listening": "Listening...",
+    "micOff": "Mic Off",
+    "tapToSpeak": "Tap to Speak",
+    "complete": "Complete!",
+    "target": "Target",
+    "difficulty": "Difficulty {{level}}"
+  },
+  "skills": {
+    "reading": {
+      "name": "Reading",
+      "game": "Enchanting Table",
+      "action": "Enchant!",
+      "task": "Speak the ancient words to channel enchantments and vanquish your foes!"
+    },
+    "math": {
+      "name": "Math",
+      "game": "Redstone",
+      "action": "Calculate!",
+      "task": "Power up your redstone circuits to activate traps and outsmart hostile mobs!"
+    },
+    "writing": {
+      "name": "Writing",
+      "game": "Crafting Table",
+      "action": "Craft!",
+      "task": "Spell out the recipe to forge legendary weapons and armor!"
+    },
+    "cleaning": {
+      "name": "Cleaning",
+      "game": "Chest Management",
+      "action": "Organize!",
+      "task": "Sort your loot and prepare your inventory for the adventures ahead!"
+    },
+    "memory": {
+      "name": "Memory",
+      "game": "Match n' Hatch",
+      "action": "Match!",
+      "task": "Find the matching pairs to hatch rare creatures for your farm!"
+    },
+    "patterns": {
+      "name": "Pattern Recognition",
+      "game": "Logic Building",
+      "action": "Solve!",
+      "task": "Decipher the sequence to unlock ancient mechanisms and hidden treasures!"
+    }
   }
 }

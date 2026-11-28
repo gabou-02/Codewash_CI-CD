@@ -24,6 +24,8 @@ import {
 import { playClick, getSfxVolume } from "../../utils/soundManager";
 import { calculateXPToLevel } from "../../utils/gameUtils";
 import { AURA_ADJECTIVES } from "../../utils/mobDisplayUtils";
+import { isMicStatus } from "../../constants/micStatus";
+import { useTranslation } from "../../i18n/context";
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
@@ -106,6 +108,7 @@ const SkillCard = ({
   borderColor,
   bossHealing,
 }) => {
+  const { t, tOr } = useTranslation();
   const [mathInput, setMathInput] = useState("");
   const [isHit, setIsHit] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
@@ -222,7 +225,14 @@ const SkillCard = ({
   }
 
   const skillThemeConfig = themeData.skills[config.id] || {};
-  const skillName = skillThemeConfig.name || config.name;
+  // A theme that genuinely renames a skill keeps its own wording, which is
+  // content rather than interface and is not translated yet (D13). When the
+  // theme simply repeats the base name, translate it.
+  const themeSkillName = skillThemeConfig.name;
+  const skillName =
+    themeSkillName && themeSkillName !== config.name
+      ? themeSkillName
+      : tOr(`skills.${config.id}.name`, config.name);
 
   // Determine valid mob source and display name based on skill type
   let mobSrc;
@@ -372,8 +382,7 @@ const SkillCard = ({
       config.challengeType === "reading" &&
       isBattling &&
       spokenText &&
-      spokenText !== "Listening..." &&
-      spokenText !== "Mic Off"
+      !isMicStatus(spokenText)
     ) {
       // Check if spoken text changed
       if (spokenText !== prevSpokenTextRef.current) {
@@ -596,7 +605,9 @@ const SkillCard = ({
         {!isBattling && (
           <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-white border border-white/20 z-20">
             <div className="text-xs text-gray-400 uppercase">{skillName}</div>
-            <div className="text-lg leading-none">{config.fantasyName}</div>
+            <div className="text-lg leading-none">
+              {tOr(`skills.${config.id}.game`, config.fantasyName)}
+            </div>
           </div>
         )}
         {!isBattling && (
@@ -723,14 +734,16 @@ const SkillCard = ({
                   <div className="w-full flex flex-col items-center gap-1">
                     {/* Round counter */}
                     <div className="text-white text-lg font-bold py-1">
-                      Round: {completedRounds}{" "}
+                      {t("miniGames.round", { count: completedRounds })}{" "}
                       {isShowingSequence && (
                         <span className="text-yellow-400 animate-pulse">
-                          Watch!
+                          {t("miniGames.watch")}
                         </span>
                       )}
                       {!isShowingSequence && simonGameActive && (
-                        <span className="text-green-400">Your turn!</span>
+                        <span className="text-green-400">
+                          {t("miniGames.yourTurn")}
+                        </span>
                       )}
                     </div>
                     {/* Dynamic axolotl formation based on difficulty */}
@@ -826,8 +839,13 @@ const SkillCard = ({
                         <div
                           className={`absolute bottom-1 text-xs ${isReadingWrong ? "text-red-400" : "text-gray-400"}`}
                         >
-                          {spokenText ||
-                            (isListening ? "Listening..." : "Mic Off")}
+                          {isMicStatus(spokenText) || !spokenText
+                            ? t(
+                                isListening
+                                  ? "miniGames.listening"
+                                  : "miniGames.micOff",
+                              )
+                            : spokenText}
                         </div>
                       )}
                     </div>
@@ -965,7 +983,7 @@ const SkillCard = ({
                           <>
                             <Mic className="inline text-gray-500" />
                             <span className="text-xs uppercase font-bold text-stone-400">
-                              Tap to Speak
+                              {t("miniGames.tapToSpeak")}
                             </span>
                           </>
                         )}
@@ -976,7 +994,7 @@ const SkillCard = ({
                         onClick={() => setShowParentalModal(true)}
                         className="w-full bg-green-600 hover:bg-green-500 text-white text-3xl font-bold py-4 rounded shadow-[0_4px_0_#166534] active:shadow-none active:translate-y-[4px] transition-all"
                       >
-                        Complete!
+                        {t("miniGames.complete")}
                       </button>
                     )}
                     {config.challengeType !== "cleaning" &&
@@ -1018,14 +1036,14 @@ const SkillCard = ({
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center">
             <p className="text-gray-400 text-center mb-4 px-2">
-              {config.taskDescription}
+              {tOr(`skills.${config.id}.task`, config.taskDescription)}
             </p>
             <button
               onClick={onStartBattle}
               style={buttonStyle}
               className={`w-full text-white text-3xl font-bold py-6 rounded-lg active:shadow-none active:translate-y-[6px] transition-all border-2 uppercase tracking-wider`}
             >
-              {config.actionName}
+              {tOr(`skills.${config.id}.action`, config.actionName)}
             </button>
           </div>
         )}
@@ -1098,7 +1116,7 @@ const SkillCard = ({
                       {/* Enemy Name */}
                       <div className="bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                         <div className="text-[8px] text-amber-900 uppercase font-bold tracking-wide">
-                          Target
+                          {t("miniGames.target")}
                         </div>
                         <div className="text-stone-900 font-black text-sm leading-tight">
                           {displayMobNameWithAura}
@@ -1137,7 +1155,10 @@ const SkillCard = ({
                           Quest
                         </div>
                         <div className="text-stone-800 text-[10px] leading-snug italic font-medium">
-                          {config.taskDescription}
+                          {tOr(
+                            `skills.${config.id}.task`,
+                            config.taskDescription,
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1145,7 +1166,7 @@ const SkillCard = ({
                     {/* Bottom stamp/seal effect */}
                     <div className="bg-gradient-to-t from-amber-900 to-amber-800 p-1 border-t-4 border-amber-950">
                       <div className="text-center text-yellow-200 text-[8px] font-bold uppercase tracking-widest">
-                        {config.fantasyName}
+                        {tOr(`skills.${config.id}.game`, config.fantasyName)}
                       </div>
                     </div>
                   </div>
@@ -1180,7 +1201,7 @@ const SkillCard = ({
             <div className="relative">
               <SafeImage
                 src={DIFFICULTY_IMAGES[difficulty] || DIFFICULTY_IMAGES[1]}
-                alt={`Difficulty ${difficulty}`}
+                alt={t("miniGames.difficulty", { level: difficulty })}
                 className="w-8 h-8 object-contain"
               />
               {/* Difficulty level number indicator in bottom-right corner */}

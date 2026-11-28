@@ -81,6 +81,7 @@ import {
   loadCosmetics,
   loadProfile,
 } from "./profile/profileStorage";
+import { MIC_STATUS } from "./constants/micStatus";
 
 // Parent verification privilege constants
 const PARENT_PRIVILEGE_LEVEL = 200;
@@ -89,7 +90,6 @@ const PARENT_PRIVILEGE_BADGES = [1, 2, 3, 4, 5, 6, 7, 8];
 
 // Voice recognition constants
 const MIN_SPOKEN_TEXT_LENGTH = 2;
-const MIC_OFF_TEXT = "Mic Off";
 
 // Boss healing animation duration (ms)
 const BOSS_HEALING_ANIMATION_DURATION = 600;
@@ -965,7 +965,7 @@ const App = () => {
       recognitionRef.current = null;
     }
     setIsListening(false);
-    setSpokenText(MIC_OFF_TEXT);
+    setSpokenText(MIC_STATUS.OFF);
   };
 
   const startVoiceListener = (targetId) => {
@@ -988,7 +988,7 @@ const App = () => {
     recognitionRef.current.onstart = () => {
       console.log("[Speech Recognition] Started listening");
       setIsListening(true);
-      setSpokenText("Listening...");
+      setSpokenText(MIC_STATUS.LISTENING);
     };
 
     recognitionRef.current.onend = () => {
@@ -1008,7 +1008,7 @@ const App = () => {
           }
         }, 100);
       } else {
-        setSpokenText(MIC_OFF_TEXT);
+        setSpokenText(MIC_STATUS.OFF);
       }
     };
 
