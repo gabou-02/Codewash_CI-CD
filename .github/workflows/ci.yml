@@ -76,8 +76,16 @@ jobs:
 
       # Subject rule: at least 80 % of the lines added or modified by the PR
       # must be covered. pipx is preinstalled on GitHub runners.
+      #
+      # Feature pull requests only, which all target `dev`. On an integration
+      # pull request from `dev` to `main` the base can be days behind, so
+      # diff-cover counts the whole period as "changed" and drags in every
+      # untouched inherited line the formatting pass rewrote. Those lines
+      # already went through this gate on their own pull request; measuring
+      # them again at integration says nothing and blocks the merge (it is
+      # what forced the bypass recorded as D34).
       - name: Diff coverage gate (>= 80 % of changed lines)
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && github.base_ref != 'main'
         env:
           BASE_REF: ${{ github.base_ref }}
         run: |
