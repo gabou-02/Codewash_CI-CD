@@ -89,4 +89,25 @@ describe("speech recognition wiring", () => {
     expect(typeof recognition.onend).toBe("function");
     act(() => recognition.onstart());
   });
+
+  it("stops the listener when the battle ends", () => {
+    const { container } = renderApp("en");
+    startReadingBattle();
+    const started = recognition;
+
+    // The backdrop covering the screen during a battle closes it on click.
+    // Matched by class: jsdom folds minWidth/minHeight into a `min-size`
+    // shorthand, so selecting on the inline style does not work here.
+    const backdrop = [...container.querySelectorAll("div")].find(
+      (node) =>
+        typeof node.className === "string" &&
+        node.className.includes("fixed inset-0 bg-black/50"),
+    );
+    expect(backdrop, "battle backdrop not rendered").toBeTruthy();
+    act(() =>
+      backdrop.dispatchEvent(new MouseEvent("click", { bubbles: true })),
+    );
+
+    expect(started.stop).toHaveBeenCalled();
+  });
 });
