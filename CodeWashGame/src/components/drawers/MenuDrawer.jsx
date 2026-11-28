@@ -15,12 +15,14 @@ import {
   getAchievementDisplayName,
 } from "../../utils/achievementUtils";
 import { calculateXPToLevel } from "../../utils/gameUtils";
+import { useTranslation } from "../../i18n/context";
 
 // Achievement grid constants
 const ACHIEVEMENT_GRID_COLUMNS = 6;
 const TOOLTIP_POSITION_THRESHOLD = 4; // Columns >= this show tooltip on left
 
 const MenuDrawer = ({ isOpen, skills, stats }) => {
+  const { t } = useTranslation();
   const totalLevels = Object.values(skills).reduce(
     (acc, s) => acc + s.level,
     0,
@@ -51,19 +53,19 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
         {/* Header */}
         <div className="shrink-0 border-b-4 border-stone-600 pb-4 mb-4">
           <h2 className="text-5xl text-yellow-400 font-bold uppercase tracking-widest mb-2 drop-shadow-md">
-            Achievements
+            {t("achievements.title")}
           </h2>
           <div className="flex gap-6 text-stone-400 text-2xl">
             <p>
-              Total Level:{" "}
+              {t("achievements.totalLevel")}{" "}
               <span className="text-white font-bold">{totalLevels}</span>
             </p>
             <p>
-              Badges:{" "}
+              {t("achievements.badges")}{" "}
               <span className="text-yellow-400 font-bold">{totalBadges}</span>
             </p>
             <p>
-              Achievements:{" "}
+              {t("achievements.count")}{" "}
               <span className="text-green-400 font-bold">
                 {unlockedAchievements}/{totalAchievements}
               </span>
@@ -185,7 +187,7 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
           {/* Special Achievements Section */}
           <div className="mt-8">
             <h3 className="text-3xl text-yellow-400 font-bold uppercase tracking-widest mb-4 border-b-2 border-stone-600 pb-2">
-              Special Achievements
+              {t("achievements.special")}
             </h3>
             <div className="grid grid-cols-6 gap-3">
               {Object.values(ACHIEVEMENTS).map((achievement, index) => {
@@ -326,7 +328,7 @@ const MenuDrawer = ({ isOpen, skills, stats }) => {
                           )}
                           {!nextTier && unlocked && (
                             <p className="text-xs text-green-400 font-bold">
-                              MAX TIER REACHED!
+                              {t("achievements.maxTier")}
                             </p>
                           )}
                         </div>

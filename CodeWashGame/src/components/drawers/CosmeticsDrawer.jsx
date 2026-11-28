@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import SafeImage from "../ui/SafeImage";
 import { THEMES_LIST } from "../../constants/gameData";
+import { useTranslation } from "../../i18n/context";
 import { ACHIEVEMENTS } from "../../constants/achievements";
 
 const BORDER_EFFECTS = [
@@ -140,6 +141,7 @@ const CosmeticsDrawer = ({
   unlockedBorders,
   unlockedAchievements = [], // New prop for unlocked achievements
 }) => {
+  const { t } = useTranslation();
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const isBorderUnlocked = (badge) => {
@@ -164,14 +166,14 @@ const CosmeticsDrawer = ({
             className="text-4xl text-yellow-400 font-bold uppercase tracking-widest drop-shadow-md"
             style={{ fontFamily: '"VT323", monospace' }}
           >
-            Themes & Cosmetics
+            {t("cosmetics.title")}
           </h2>
         </div>
 
         {/* Theme Selection */}
         <div>
           <h3 className="text-xl text-blue-300 mb-5 font-bold flex items-center gap-3 uppercase tracking-wider">
-            <Sparkles size={20} /> Theme Select
+            <Sparkles size={20} /> {t("cosmetics.themeSelect")}
           </h3>
           {/* Scrollable: the list grew past what fits once two themes were
               added, and it keeps fitting as more are declared. */}
@@ -217,7 +219,7 @@ const CosmeticsDrawer = ({
         {/* Border Effect Selection - Optimized Grid Layout */}
         <div>
           <h3 className="text-xl text-blue-300 mb-4 font-bold flex items-center gap-3 uppercase tracking-wider">
-            <Sparkles size={20} /> Border Effects
+            <Sparkles size={20} /> {t("cosmetics.borderEffects")}
           </h3>
           <div className="grid grid-cols-3 gap-3">
             {/* All border effects (badge-unlocked and achievement-unlocked) */}
@@ -301,7 +303,7 @@ const CosmeticsDrawer = ({
                       </div>
                       {isSelected && (
                         <div className="absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold px-1.5 py-0.5 rounded">
-                          ACTIVE
+                          {t("cosmetics.active")}
                         </div>
                       )}
 
@@ -340,15 +342,17 @@ const CosmeticsDrawer = ({
                         </div>
                         <div className="flex-1">
                           <h4 className="text-sm font-bold text-slate-300">
-                            {effect.badge} Badge Required
+                            {t("cosmetics.badgeRequired", {
+                              badge: effect.badge,
+                            })}
                           </h4>
                           <p className="text-xs text-slate-400 mt-0.5">
-                            Earn the {effect.badge} badge to unlock this effect
+                            {t("cosmetics.badgeHint", { badge: effect.badge })}
                           </p>
                         </div>
                       </div>
                       <div className="text-xs px-2 py-1 rounded bg-red-900/30 text-red-400">
-                        ✗ Locked
+                        {t("cosmetics.locked")}
                       </div>
                     </div>
                   )}
@@ -416,7 +420,7 @@ const CosmeticsDrawer = ({
                       </div>
                       {isSelected && (
                         <div className="absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold px-1.5 py-0.5 rounded">
-                          ACTIVE
+                          {t("cosmetics.active")}
                         </div>
                       )}
                     </div>
@@ -454,7 +458,9 @@ const CosmeticsDrawer = ({
                     <div
                       className={`text-xs px-2 py-1 rounded ${unlocked ? "bg-green-900/30 text-green-400" : "bg-red-900/30 text-red-400"}`}
                     >
-                      {unlocked ? "✓ Unlocked" : "✗ Locked"}
+                      {unlocked
+                        ? t("cosmetics.unlocked")
+                        : t("cosmetics.locked")}
                     </div>
                   </div>
                 </div>
