@@ -82,6 +82,7 @@ import {
   loadProfile,
 } from "./profile/profileStorage";
 import { MIC_STATUS } from "./constants/micStatus";
+import { resolveTheme } from "./theme/resolveTheme";
 
 // Parent verification privilege constants
 const PARENT_PRIVILEGE_LEVEL = 200;
@@ -1116,7 +1117,7 @@ const App = () => {
     }
     return items;
   };
-  const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG.minecraft;
+  const currentThemeData = resolveTheme(activeTheme, THEME_CONFIG);
   const containerStyle = {
     ...currentThemeData.style,
     fontFamily: '"VT323", monospace',
