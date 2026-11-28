@@ -199,7 +199,11 @@ add `.npmrc`with`engine-strict=true` to make it block). (days, open)
 - **D34 · Diff-coverage gate bypassed once** · PR #1 : the PR reformats the whole codebase,
   so diff-cover counts every line as modified (43 % < 80 %). Formatting only, verified by
   rebuilding the PR from dev + Prettier (only 2 eslint comments differ). Merged with that
-  single check red, before branch rulesets existed. (hours, done, not to be repeated)
+  single check red, before branch rulesets existed. (hours, done: the gate now
+  skips integration pull requests, `base_ref != main` in `ci.yml`. It was never
+  measuring anything on those: the base can be days behind, so every untouched
+  inherited line the formatting pass rewrote counted as changed. Feature pull
+  requests, which all target `dev`, are still gated as before)
 - **D35 · Trailing commas in profile cards** · `ProfileCard.jsx` : shows "P2," and
   "Player 2," (present since `415bedb`). (hours, done: both commas removed)
 - **D38 · Format gate did not cover the repository root** : `format` and
