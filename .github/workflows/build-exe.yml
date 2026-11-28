@@ -1,0 +1,79 @@
+name: Build Windows EXE
+
+# Manual run (workflow_dispatch) builds the exe as an artifact.
+# Pushing a version tag (v*) also publishes a GitHub release.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    # pour éviter que 'npm ci' ne trouve pas de package.json et que le build échoue :)
+    defaults:
+      run:
+        working-directory: CodeWashGame
+
+    runs-on: windows-latest
+
+    permissions:
+      contents: write # Required for creating releases and uploading assets
+      actions: read # Required for workflow runs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          # The lockfile is not at the repo root (D37).
+          cache-dependency-path: CodeWashGame/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Vite project
+        run: npm run build
+
+      - name: Build Electron app
+        run: npm run electron:build
+
+      # Paths of uses: steps are relative to the workspace, not working-directory (D37).
+      - name: Upload Windows Portable EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: LevelUpRPG-Windows-Portable
+          path: CodeWashGame/release/LevelUpRPG-Portable.exe
+          if-no-files-found: error
+
+      - name: Create Release (on version tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Level Up RPG ${{ github.ref_name }}
+          body: |
+            ## Level Up RPG - Windows Portable Version
+
+            Download the portable `.exe` file below and double-click to play!
+
+            No installation required - perfect for sharing via flash drive.
+
+            ### What's included:
+            - All game assets and themes
+            - Sound effects and music
+            - Complete game experience in a single executable
+
+            ### How to run:
+            1. Download `LevelUpRPG-Portable.exe`
+            2. Double-click to launch
+            3. Have fun!
+          files: CodeWashGame/release/LevelUpRPG-Portable.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

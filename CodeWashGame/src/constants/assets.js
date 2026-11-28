@@ -11,27 +11,27 @@ const assets = {
     // Placeholder paths - use HOSTILE_MOBS, FRIENDLY_MOBS, BOSS_MOBS from gameData.jsx
   },
   items: {
-    healthPotion: 'assets/items/health_potion.png',
-    manaPotion: 'assets/items/mana_potion.png',
-    sword: 'assets/items/sword.png',
+    healthPotion: "assets/items/health_potion.png",
+    manaPotion: "assets/items/mana_potion.png",
+    sword: "assets/items/sword.png",
     // Add more item paths here
   },
   badges: {
-    beginner: 'assets/badges/beginner.png',
-    expert: 'assets/badges/expert.png',
-    master: 'assets/badges/master.png',
+    beginner: "assets/badges/beginner.png",
+    expert: "assets/badges/expert.png",
+    master: "assets/badges/master.png",
     // Add more badge paths here
   },
   audio: {
-    backgroundMusic: 'assets/audio/background_music.mp3',
-    battleMusic: 'assets/audio/battle_music.mp3',
+    backgroundMusic: "assets/audio/background_music.mp3",
+    battleMusic: "assets/audio/battle_music.mp3",
     // Add more audio paths here
   },
   ui: {
-    button: 'assets/ui/button.png',
-    healthBar: 'assets/ui/health_bar.png',
+    button: "assets/ui/button.png",
+    healthBar: "assets/ui/health_bar.png",
     // Add more UI asset paths here
-  }
+  },
 };
 
 export default assets;

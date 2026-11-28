@@ -1,0 +1,95 @@
+name: CI
+
+# Quality gates (D08): any failing step blocks the merge once the
+# branch rulesets require the "quality" check (see README).
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+# A new push on the same branch cancels the run that became obsolete.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write # coverage comment on the PR
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    # The mirror copies .github/ to the school repo, where these workflows run
+    # again on an organisation whose Actions budget is exhausted: the jobs die
+    # at startup in about three seconds, having run no step, and show up red.
+    # Pinning them to the working repo makes the school copy skip cleanly.
+    # Running the pipeline here and mirroring the result is the whole point of
+    # the setup (see README).
+    if: github.repository == 'gabou-02/Codewash_CI-CD'
+    defaults:
+      run:
+        working-directory: CodeWashGame
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # diff-cover compares against the base branch history
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: CodeWashGame/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint (warnings count as errors)
+        run: npm run lint -- --max-warnings 0
+
+      - name: Build
+        run: npm run build
+
+      - name: Tests with coverage gate
+        run: npm run test:coverage
+
+      # Paths of uses: steps are relative to the workspace, not working-directory.
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: CodeWashGame/coverage/
+          if-no-files-found: ignore
+
+      - name: Coverage comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: CodeWashGame
+
+      # Subject rule: at least 80 % of the lines added or modified by the PR
+      # must be covered. pipx is preinstalled on GitHub runners.
+      #
+      # Feature pull requests only, which all target `dev`. On an integration
+      # pull request from `dev` to `main` the base can be days behind, so
+      # diff-cover counts the whole period as "changed" and drags in every
+      # untouched inherited line the formatting pass rewrote. Those lines
+      # already went through this gate on their own pull request; measuring
+      # them again at integration says nothing and blocks the merge (it is
+      # what forced the bypass recorded as D34).
+      - name: Diff coverage gate (>= 80 % of changed lines)
+        if: github.event_name == 'pull_request' && github.base_ref != 'main'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          pipx run diff-cover coverage/lcov.info \
+            --compare-branch="origin/$BASE_REF" \
+            --fail-under=80

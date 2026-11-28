@@ -10,6 +10,13 @@ concurrency:
 jobs:
   mirror:
     runs-on: ubuntu-latest
+    # The mirror copies .github/ to the school repo, where these workflows run
+    # again on an organisation whose Actions budget is exhausted: the jobs die
+    # at startup in about three seconds, having run no step, and show up red.
+    # Pinning them to the working repo makes the school copy skip cleanly.
+    # Running the pipeline here and mirroring the result is the whole point of
+    # the setup (see README).
+    if: github.repository == 'gabou-02/Codewash_CI-CD'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,5 +30,5 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git remote add school git@github.com:<orga-ecole>/B-ING-300-MPL-3-1-codewash-1.git
+          git remote add school git@github.com:EpitechBachelorPromo2028/B-ING-300-MPL-3-1-codewash-1.git
           git push school HEAD:dev
