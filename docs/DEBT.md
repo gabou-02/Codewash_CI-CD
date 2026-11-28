@@ -42,15 +42,15 @@ graph TD
 
 Where the state and the I/O live:
 
-| Concern | Where | Status |
-|---|---|---|
-| Game state | `App.jsx`, 31 `useState`, no context, props passed by hand (up to 21) | as received (D05) |
-| Saves | `localStorage`, one JSON blob per profile (`heroSkills_v23_p1/2/3`), rewritten on every hit | as received (D17) |
-| Language choice | `localStorage` via `src/i18n/storage.js`, the only module touching the global | extracted |
-| Theme resolution | `src/theme/resolveTheme.js`, pure, merges over a default theme | extracted (PR #6) |
-| Audio | `new Audio` in 11 places, plus `soundManager.js` | as received (D01, D06) |
-| Microphone | Google cloud API, no keys, no fallback | as received (D21) |
-| Randomness, timers | `Math.random` x34 and `setTimeout` x28, reached as globals | as received (D06, D16) |
+| Concern            | Where                                                                                       | Status                 |
+| ------------------ | ------------------------------------------------------------------------------------------- | ---------------------- |
+| Game state         | `App.jsx`, 31 `useState`, no context, props passed by hand (up to 21)                       | as received (D05)      |
+| Saves              | `localStorage`, one JSON blob per profile (`heroSkills_v23_p1/2/3`), rewritten on every hit | as received (D17)      |
+| Language choice    | `localStorage` via `src/i18n/storage.js`, the only module touching the global               | extracted              |
+| Theme resolution   | `src/theme/resolveTheme.js`, pure, merges over a default theme                              | extracted (PR #6)      |
+| Audio              | `new Audio` in 11 places, plus `soundManager.js`                                            | as received (D01, D06) |
+| Microphone         | Google cloud API, no keys, no fallback                                                      | as received (D21)      |
+| Randomness, timers | `Math.random` x34 and `setTimeout` x28, reached as globals                                  | as received (D06, D16) |
 
 The two extracted layers follow the policy the subject asks for: I/O isolated
 behind one module, dependencies injected, pure logic unit-tested without a DOM.
@@ -62,14 +62,14 @@ resolution, theme assets. Not yet: save/load, combat.
 
 ## 2. Baseline metrics
 
-| What | Value |
-|---|---|
-| Test coverage | 0 % (after D08: gameUtils.js 80 % lines, gated at 80) |
-| Code size | 6 938 lines / 24 files (App.jsx 1492, GlobalStyles 1302, SkillCard 778) |
-| Complexity | worst 107 (SkillCard.jsx:65), 14 functions above 10 |
-| Duplication | 2.5 % (6 clones, biggest 103 lines) |
-| npm run lint | 28 errors, all from `._*` junk files |
-| Repo | 243 MB assets, 374 `._*` files committed |
+| What          | Value                                                                   |
+| ------------- | ----------------------------------------------------------------------- |
+| Test coverage | 0 % (after D08: gameUtils.js 80 % lines, gated at 80)                   |
+| Code size     | 6 938 lines / 24 files (App.jsx 1492, GlobalStyles 1302, SkillCard 778) |
+| Complexity    | worst 107 (SkillCard.jsx:65), 14 functions above 10                     |
+| Duplication   | 2.5 % (6 clones, biggest 103 lines)                                     |
+| npm run lint  | 28 errors, all from `._*` junk files                                    |
+| Repo          | 243 MB assets, 374 `._*` files committed                                |
 
 <details>
 
@@ -85,14 +85,14 @@ Re-measure after each phase.
 
 Dated, so every claim of progress can be checked against a commit.
 
-| Date | Change | Coverage (lines) | Note |
-|---|---|---|---|
-| 2026-11-12 | baseline `415bedb` | 0 % | project as received |
-| 2026-11-19 | D08 safety net | 19.3 % | game formulas under characterization tests |
-| 2026-11-24 | i18n layer (Translation mission) | 51.6 % | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file |
-| 2026-11-25 | Prettier + five CI gates (D33) | 49.5 % | whole tree formatted; global thresholds ratcheted 14 % -> 49 % |
-| 2026-11-27 | theme assets under test (D11) | 49.6 % | 101 -> 133 tests; `SafeImage.jsx` 0 % -> 100 % |
-| 2026-11-27 | D02 fix + profile loading extracted, merged with D11 | 53.4 % | 159 tests; `src/profile/` at 100 %; `App.jsx` 1840 -> 1658 lines |
+| Date       | Change                                               | Coverage (lines) | Note                                                             |
+| ---------- | ---------------------------------------------------- | ---------------- | ---------------------------------------------------------------- |
+| 2026-11-12 | baseline `415bedb`                                   | 0 %              | project as received                                              |
+| 2026-11-19 | D08 safety net                                       | 19.3 %           | game formulas under characterization tests                       |
+| 2026-11-24 | i18n layer (Translation mission)                     | 51.6 %           | jsdom component tests reach `App.jsx`, 0 % -> 30 % on that file  |
+| 2026-11-25 | Prettier + five CI gates (D33)                       | 49.5 %           | whole tree formatted; global thresholds ratcheted 14 % -> 49 %   |
+| 2026-11-27 | theme assets under test (D11)                        | 49.6 %           | 101 -> 133 tests; `SafeImage.jsx` 0 % -> 100 %                   |
+| 2026-11-27 | D02 fix + profile loading extracted, merged with D11 | 53.4 %           | 159 tests; `src/profile/` at 100 %; `App.jsx` 1840 -> 1658 lines |
 
 ## 3. Fix first (P1)
 
@@ -150,8 +150,9 @@ Dated, so every claim of progress can be checked against a commit.
   hit, reset = page reload. (days, open)
 - **D18 · Copy-paste x6** : letter-slot input x4, audio snippet x6, tooltips x3. (days, open)
 - **D19 · Dead code** : 2 orphan files, 9 unused exports, ~330 lines dead CSS, inert
-  tailwind.config.js; `readProfileStats` builds an `initial` object it never uses
-  (`src/profile/profileStorage.js`, kept as-is by the D02 extraction). (hours, open)
+  tailwind.config.js. (hours, partly done: `MenuDrawer_old.jsx` (231 lines, imported
+  nowhere) and the stray root `test.md` deleted; the unused exports, the dead CSS and
+  the inert tailwind config remain)
 - **D20 · 3 competing stylesheets** : 1302-line CSS string in JSX + index.css duplicates +
   inert Tailwind config. (days, open)
 - **D21 · Mic feature likely dead in the exe** : Google cloud API without keys, no fallback;
@@ -165,8 +166,8 @@ Dated, so every claim of progress can be checked against a commit.
 - **D25 · Fragile build** : undocumented rolldown-vite alias, Windows-only target, 162 MB of
   .wav in the exe. The CI also ran Node 20 while the toolchain needs newer (fixed:
   workflows pin Node 24 and `engines` mirrors jsdom's range, `^22.22.2 || ^24.15.0 ||
-  >=26.0.0`, after jsdom workers failed to start on 20. npm only warns on a mismatch;
-  add `.npmrc` with `engine-strict=true` to make it block). (days, open)
+  > =26.0.0`, after jsdom workers failed to start on 20. npm only warns on a mismatch;
+add `.npmrc`with`engine-strict=true` to make it block). (days, open)
 - **D26 · Magic numbers** : boss cadence "20" x9 with 3 formulas, HP "10" x3, `#FFD700` x8.
   (days, open)
 - **D32 · Most UI strings are still inline English** : the settings drawer and
@@ -180,7 +181,9 @@ Dated, so every claim of progress can be checked against a commit.
   (hours, done: `ci.yml` now runs five gates per PR, format, lint at
   `--max-warnings 0`, build, coverage thresholds, and 80 % diff coverage via
   `diff-cover`; coverage published as artifact and PR comment; `dev` added to the
-  push triggers. Static analysis (CodeQL) is still absent, see the planning)
+  push triggers. Static analysis added separately as
+  `.github/workflows/codeql.yml`, `security-and-quality` queries, same repository
+  guard as the others)
 
 ## 5. Later (P3)
 
@@ -198,7 +201,11 @@ Dated, so every claim of progress can be checked against a commit.
   rebuilding the PR from dev + Prettier (only 2 eslint comments differ). Merged with that
   single check red, before branch rulesets existed. (hours, done, not to be repeated)
 - **D35 · Trailing commas in profile cards** · `ProfileCard.jsx` : shows "P2," and
-  "Player 2," (present since `415bedb`). (hours, open)
+  "Player 2," (present since `415bedb`). (hours, done: both commas removed)
+- **D38 · Format gate did not cover the repository root** : `format` and
+  `format:check` ran `prettier` from `CodeWashGame/`, so the root markdown, `docs/`
+  and the workflows were never checked. (hours, done: both scripts now include
+  `../*.md`, `../docs/**/*.md` and `../.github/**/*.yml`)
 - **D36 · Warning on every fresh profile** · `profileStorage.js` `loadTheme` / `loadStats` :
   `JSON.parse(null).theme` throws when a profile has no save yet, caught and logged with
   `console.warn`. Harmless for the player, noisy in the console; frozen by the
@@ -214,11 +221,11 @@ Dated, so every claim of progress can be checked against a commit.
 
 ## 6. Risk matrix
 
-|  | Low likelihood | Medium | High |
-|---|---|---|---|
-| **High impact** | D21 | D02, D04, D13 | D01, D05, D06, D07, D08 |
-| **Medium impact** | D17, D30 | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33, D37 |
-| **Low impact** | D19, D27, D31, D34 | D20, D28, D29, D32 | D15, D35, D36 |
+|                   | Low likelihood     | Medium                                           | High                    |
+| ----------------- | ------------------ | ------------------------------------------------ | ----------------------- |
+| **High impact**   | D21                | D02, D04, D13                                    | D01, D05, D06, D07, D08 |
+| **Medium impact** | D17, D30           | D11, D12, D14, D16, D18, D22, D23, D24, D25, D26 | D03, D09, D10, D33, D37 |
+| **Low impact**    | D19, D27, D31, D34 | D20, D28, D29, D32                               | D15, D35, D36           |
 
 ## 7. Attack plan
 
