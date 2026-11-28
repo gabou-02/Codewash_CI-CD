@@ -147,7 +147,7 @@ const ProfileCard = ({
               <div className="bg-black/50 rounded-lg px-5 py-3 border border-white/10 backdrop-blur-sm">
                 <div className="group/name flex items-center justify-center gap-2 flex-wrap">
                   <span className="text-slate-300 text-lg font-bold">
-                    P{id},
+                    P{id}
                   </span>
                   <h3
                     className={`text-2xl font-bold uppercase truncate leading-none ${isCurrent ? "text-yellow-100 drop-shadow-md" : "text-white"}`}
@@ -156,7 +156,7 @@ const ProfileCard = ({
                       textShadow: "2px 2px 0 #000",
                     }}
                   >
-                    {name},
+                    {name}
                   </h3>
                   <Heart
                     className={`fill-red-600 text-red-800 ${isCurrent ? "animate-pulse" : ""}`}
