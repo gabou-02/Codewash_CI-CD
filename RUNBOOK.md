@@ -116,9 +116,9 @@ report that gets fixed quickly contains:
 
 ## Who to call
 
-| Area | Owner |
-|---|---|
-| Themes, translations, UI text | Mateo |
+| Area                           | Owner   |
+| ------------------------------ | ------- |
+| Themes, translations, UI text  | Mateo   |
 | Bug reporting, trivia game, CI | Gabriel |
 
 Every known bug mentioned here is listed in `docs/DEBT.md` with its identifier,

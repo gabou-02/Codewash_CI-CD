@@ -9,14 +9,14 @@ Written for teachers and parents. Nothing here needs a developer.
 
 Six buttons sit around the edges.
 
-| Where | Button | What it opens |
-|---|---|---|
-| Top left | gear | Settings: profiles, volume, reset |
-| Top left | sparkles | Themes and cosmetics |
-| Top left | letters | Language |
-| Top right | lines | Achievements and badges |
-| Top right | arrows | Fullscreen |
-| Bottom right | bug | Report a bug |
+| Where        | Button   | What it opens                     |
+| ------------ | -------- | --------------------------------- |
+| Top left     | gear     | Settings: profiles, volume, reset |
+| Top left     | sparkles | Themes and cosmetics              |
+| Top left     | letters  | Language                          |
+| Top right    | lines    | Achievements and badges           |
+| Top right    | arrows   | Fullscreen                        |
+| Bottom right | bug      | Report a bug                      |
 
 The hearts at the bottom are the player's health. Lose them all in a fight and
 the skill loses a level, so they matter.
@@ -43,14 +43,14 @@ straight away, which is useful for demonstrating or testing, not for a child.
 Each skill is a card on the main screen, with its own level, experience bar and
 difficulty.
 
-| Skill | Called in game | What the child practises |
-|---|---|---|
-| Reading | Enchanting Table | reading words aloud or recognising them |
-| Math | Redstone | mental arithmetic |
-| Writing | Crafting Table | spelling, letter by letter |
-| Cleaning | Chest Management | sorting and organising loot |
-| Memory | Match n' Hatch | a pairs game |
-| Patterns | Logic Building | a Simon-style sequence game |
+| Skill    | Called in game   | What the child practises                |
+| -------- | ---------------- | --------------------------------------- |
+| Reading  | Enchanting Table | reading words aloud or recognising them |
+| Math     | Redstone         | mental arithmetic                       |
+| Writing  | Crafting Table   | spelling, letter by letter              |
+| Cleaning | Chest Management | sorting and organising loot             |
+| Memory   | Match n' Hatch   | a pairs game                            |
+| Patterns | Logic Building   | a Simon-style sequence game             |
 
 The in-game names change with the theme; the table shows the default ones.
 
