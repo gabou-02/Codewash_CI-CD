@@ -59,6 +59,25 @@ export const translate = (catalogs, language, key, vars) => {
 };
 
 /**
+ * Like translate(), but falls back to `fallback` instead of to the key.
+ *
+ * For text that already exists in the data, such as the skill vocabulary in
+ * gameData.jsx or a theme's own wording: a missing translation shows the
+ * original English rather than a raw key, so an untranslated theme stays
+ * playable. Returns the key only when there is no fallback either.
+ */
+export const translateOr = (catalogs, language, key, fallback, vars) => {
+  const catalogSet = catalogs || {};
+  const template =
+    resolveKey(catalogSet[language], key) ??
+    resolveKey(catalogSet[DEFAULT_LANGUAGE], key) ??
+    fallback ??
+    key;
+
+  return interpolate(template, vars);
+};
+
+/**
  * Builds the language list shown in the selector, straight from the loaded
  * catalogs: adding a language is adding a locale file, never editing a list.
  * Catalogs with no `$meta.name` are skipped rather than shown unnamed.

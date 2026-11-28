@@ -108,7 +108,7 @@ const SkillCard = ({
   borderColor,
   bossHealing,
 }) => {
-  const { t } = useTranslation();
+  const { t, tOr } = useTranslation();
   const [mathInput, setMathInput] = useState("");
   const [isHit, setIsHit] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
@@ -225,7 +225,14 @@ const SkillCard = ({
   }
 
   const skillThemeConfig = themeData.skills[config.id] || {};
-  const skillName = skillThemeConfig.name || config.name;
+  // A theme that genuinely renames a skill keeps its own wording, which is
+  // content rather than interface and is not translated yet (D13). When the
+  // theme simply repeats the base name, translate it.
+  const themeSkillName = skillThemeConfig.name;
+  const skillName =
+    themeSkillName && themeSkillName !== config.name
+      ? themeSkillName
+      : tOr(`skills.${config.id}.name`, config.name);
 
   // Determine valid mob source and display name based on skill type
   let mobSrc;
@@ -598,7 +605,9 @@ const SkillCard = ({
         {!isBattling && (
           <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-white border border-white/20 z-20">
             <div className="text-xs text-gray-400 uppercase">{skillName}</div>
-            <div className="text-lg leading-none">{config.fantasyName}</div>
+            <div className="text-lg leading-none">
+              {tOr(`skills.${config.id}.game`, config.fantasyName)}
+            </div>
           </div>
         )}
         {!isBattling && (
@@ -1027,14 +1036,14 @@ const SkillCard = ({
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center">
             <p className="text-gray-400 text-center mb-4 px-2">
-              {config.taskDescription}
+              {tOr(`skills.${config.id}.task`, config.taskDescription)}
             </p>
             <button
               onClick={onStartBattle}
               style={buttonStyle}
               className={`w-full text-white text-3xl font-bold py-6 rounded-lg active:shadow-none active:translate-y-[6px] transition-all border-2 uppercase tracking-wider`}
             >
-              {config.actionName}
+              {tOr(`skills.${config.id}.action`, config.actionName)}
             </button>
           </div>
         )}
@@ -1146,7 +1155,10 @@ const SkillCard = ({
                           Quest
                         </div>
                         <div className="text-stone-800 text-[10px] leading-snug italic font-medium">
-                          {config.taskDescription}
+                          {tOr(
+                            `skills.${config.id}.task`,
+                            config.taskDescription,
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1154,7 +1166,7 @@ const SkillCard = ({
                     {/* Bottom stamp/seal effect */}
                     <div className="bg-gradient-to-t from-amber-900 to-amber-800 p-1 border-t-4 border-amber-950">
                       <div className="text-center text-yellow-200 text-[8px] font-bold uppercase tracking-widest">
-                        {config.fantasyName}
+                        {tOr(`skills.${config.id}.game`, config.fantasyName)}
                       </div>
                     </div>
                   </div>

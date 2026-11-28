@@ -2,7 +2,12 @@ import React, { useCallback, useMemo, useState } from "react";
 import { CATALOGS } from "./catalogs";
 import { I18nContext } from "./context";
 import { browserStorage, LANGUAGE_STORAGE_KEY } from "./storage";
-import { listLanguages, pickInitialLanguage, translate } from "./translator";
+import {
+  listLanguages,
+  pickInitialLanguage,
+  translate,
+  translateOr,
+} from "./translator";
 
 /**
  * Provides the active language and the t() helper to the tree.
@@ -40,6 +45,8 @@ export const I18nProvider = ({
       setLanguage,
       languages: listLanguages(catalogs),
       t: (key, vars) => translate(catalogs, language, key, vars),
+      tOr: (key, fallback, vars) =>
+        translateOr(catalogs, language, key, fallback, vars),
     }),
     [catalogs, language, setLanguage],
   );
